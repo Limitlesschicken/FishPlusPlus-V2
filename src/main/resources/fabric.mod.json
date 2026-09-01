@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "fishplusplusv2",
+	"version": "${version}",
+	"name": "FishPlusPlusV2",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/fishplusplusv2/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"org.fish.FishPlusPlusV2"
+		]
+	},
+	"mixins": [
+		"fishplusplusv2.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
