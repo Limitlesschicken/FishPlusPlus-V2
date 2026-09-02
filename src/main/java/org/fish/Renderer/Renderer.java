@@ -1,68 +1,52 @@
 package org.fish.Renderer;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.systems.CommandEncoder;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTexture;
-import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
+import org.fish.FishPlusPlusV2;
 import org.joml.*;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import static org.fish.FishPlusPlusV2.mc;
 
 public class Renderer {
+    public static void Render(QuickMeshBuilder.Mesh mesh, Matrix4f modelView) {
+        ProfilerFiller profiler = Profiler.get();
+        profiler.push("RenderPass");
 
-    private static GpuBuffer renderBuffer = RenderSystem.getDevice().createBuffer(() -> "FishplusPlus buffer", 40, 500);
-    private static RenderSystem.AutoStorageIndexBuffer indices = RenderSystem.getSequentialBuffer(PrimitiveTopology.TRIANGLES);
-
-    public static void Render(Matrix4f modelView) {
-        //building mesh for initial rendering test
-        ByteBufferBuilder byteBufferBuilder = new ByteBufferBuilder(500);
-        BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, PrimitiveTopology.TRIANGLES, DefaultVertexFormat.POSITION_COLOR);
-
-        bufferBuilder.addVertex(0, 0, 0).setColor(255, 255, 255, 255);
-        bufferBuilder.addVertex(10, 0, 0).setColor(255, 255, 255, 255);
-        bufferBuilder.addVertex(10, 10, 0).setColor(255, 255, 255, 255);
-
-        try (MeshData meshData = bufferBuilder.buildOrThrow()) {
-            RenderSystem.getDevice().createCommandEncoder().writeToBuffer(renderBuffer.slice(), meshData.vertexBuffer());
-        }
-
+        CommandEncoder commandEncoder = RenderSystem.getDevice().createCommandEncoder();
 
         RenderTarget mainRenderTarget = mc.gameRenderer.mainRenderTarget();
-        Optional<Vector4fc> optionalColor = Optional.empty();
-        Supplier<String> supplier = () -> "FishPlusPlus RenderPass";
-        RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(supplier, mainRenderTarget.getColorTextureView(), optionalColor);
-
-        GpuBuffer indexBuffer = indices.getBuffer(3);
+        RenderPass pass = commandEncoder.createRenderPass(() -> "FishPlusPlus RenderPass", mainRenderTarget.getColorTextureView(), Optional.empty());
 
         pass.setPipeline(RenderPipelines.DefaultPipeline);
-        pass.setVertexBuffer(0, renderBuffer.slice());
-        pass.setIndexBuffer(indexBuffer, indices.type());
+        pass.setVertexBuffer(0, mesh.buffer().slice());
+        pass.setIndexBuffer(mesh.indexBuffer(), mesh.indexType());
+
+        profiler.popPush("Uniforms");
 
         Camera camera = mc.gameRenderer.mainCamera();
 
-        Matrix4f view = new Matrix4f(modelView);
-
         GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
                         .writeTransform(
-                                view,
-                                new Vector4f(1.0f, 1.0f, 1.0f, 1.0f),
-                                new Vector3f((float)(-camera.position().x), (float)(-camera.position().y), (float)(-camera.position().z)),
+                                modelView,
+                                new Vector4f(1.0f),
+                                camera.position().reverse().toVector3f(),
                                 new Matrix4f()
                         );
 
         pass.setUniform("Projection", RenderSystem.getProjectionMatrixBuffer());
         pass.setUniform("DynamicTransforms", dynamicTransforms);
 
-
-        pass.drawIndexed(3, 1, 0, 0, 0);
+        profiler.popPush("Draw");
+        pass.drawIndexed(mesh.indexCount(), 1, 0, 0, 0);
+        profiler.pop();
     }
 
 }

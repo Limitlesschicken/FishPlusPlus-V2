@@ -14,7 +14,11 @@ layout(std140) uniform Projection {
     mat4 projection;
 };
 
+out vec4 color;
+
 void main() {
     vec3 position = aPos + modelOffset;
+
+    color = aColor;
     gl_Position = projection * modelView * vec4(position, 1.0f);
 }

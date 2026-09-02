@@ -1,10 +1,8 @@
 package org.fish;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.resources.Identifier;
 
 import org.fish.Renderer.RenderPipelines;

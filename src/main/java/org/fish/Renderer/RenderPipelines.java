@@ -1,6 +1,8 @@
 package org.fish.Renderer;
 
 import com.mojang.blaze3d.PrimitiveTopology;
+import com.mojang.blaze3d.pipeline.BlendFunction;
+import com.mojang.blaze3d.pipeline.ColorTargetState;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.PolygonMode;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -32,6 +34,7 @@ public class RenderPipelines {
                 .withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
                 .withPolygonMode(PolygonMode.FILL)
                 .withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
+                .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
                 .buildSnippet();
 
         DefaultPipeline = register(
