@@ -27,7 +27,7 @@ public class RenderPipelines {
     public static void init() {
         //just a pipeline for basic 3d rendering. position and color
         DefaultSnippet = RenderPipeline.builder()
-                .withBindGroupLayout(BindGroupLayouts.PROJECTION)
+                .withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
                 .withCull(false)
                 .withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
                 .withPolygonMode(PolygonMode.FILL)

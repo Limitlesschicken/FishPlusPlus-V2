@@ -1,15 +1,16 @@
 {
-	"required": true,
-	"package": "org.fish.mixin",
-	"compatibilityLevel": "JAVA_25",
-	"mixins": [
-		"GameRendererMixin",
-		"MinecraftMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "org.fish.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "GameRendererMixin",
+    "LevelRendererMixin",
+    "MinecraftMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }
