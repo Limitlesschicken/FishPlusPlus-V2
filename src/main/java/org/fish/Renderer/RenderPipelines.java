@@ -45,43 +45,4 @@ public class RenderPipelines {
                         .build()
                 );
     }
-
-    /*
-    public static void compile(ResourceProvider resourceProvider) {
-        FishPlusPlusV2.LOGGER.info("Precompiling FishPlusPlus pipelines");
-        GpuDevice gpuDevice = RenderSystem.getDevice();
-        ResourceManager resourceManager = mc.getResourceManager();
-
-        LOGGER.info("Resource packs: {}", resourceManager.listPacks().toList());
-
-        Identifier vertex = FishPlusPlusV2.id("shaders/default.vsh");
-        Identifier fragment = FishPlusPlusV2.id("shaders/default.fsh");
-
-        LOGGER.info("Vertex resource: {}", resourceManager.getResource(vertex));
-        LOGGER.info("Fragment resource: {}", resourceManager.getResource(fragment));
-
-        for(RenderPipeline pipeline : RenderPipelines) {
-            ShaderSource shaderSource = (id, type) -> {
-                Identifier location = type.idConverter().idToFile(id);
-                Optional<Resource> resourceOptional = resourceManager.getResource(location);
-                if (resourceOptional.isEmpty()) {
-                    LOGGER.error("Coudln't preload {} shader {}: no resource", new Object[]{type, id});
-                    return null;
-                }
-
-                Resource resource = resourceOptional.get();
-
-                try (Reader reader = resource.openAsReader()) {
-                    return IOUtils.toString(reader);
-                } catch (IOException exception) {
-                    LOGGER.error("Coudln't preload {} shader {}: {}", new Object[]{type, id, exception});
-                    return null;
-                }
-            };
-
-            gpuDevice.precompilePipeline(pipeline, shaderSource);
-        }
-    }
-
-     */
 }

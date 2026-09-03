@@ -8,7 +8,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Camera;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
-import org.fish.FishPlusPlusV2;
 import org.joml.*;
 
 import java.util.Optional;
@@ -16,7 +15,7 @@ import java.util.Optional;
 import static org.fish.FishPlusPlusV2.mc;
 
 public class Renderer {
-    public static void Render(QuickMeshBuilder.Mesh mesh, Matrix4f modelView) {
+    public static void RenderMesh(QuickMeshBuilder.Mesh mesh, Matrix4f modelView, boolean render3D) {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("RenderPass");
 
@@ -35,9 +34,9 @@ public class Renderer {
 
         GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
                         .writeTransform(
-                                modelView,
+                                render3D ? modelView : new Matrix4f(),
                                 new Vector4f(1.0f),
-                                camera.position().reverse().toVector3f(),
+                                render3D ? camera.position().reverse().toVector3f() : new Vector3f(0.0f),
                                 new Matrix4f()
                         );
 
