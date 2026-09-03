@@ -32,9 +32,9 @@ public class LevelRendererMixin {
         profiler.push("FishPlusPlus Render");
 
         profiler.push("Mesh build");
-        QuickMeshBuilder meshBuilder = new QuickMeshBuilder();
+        QuickMeshBuilder.Render3D meshBuilder = new QuickMeshBuilder.Render3D();
         meshBuilder.beginBuilding();
-        meshBuilder.quad(new Vec3(0, 0, 0), new Vec3(10, 0, 0), new Vec3(10, 10, 0), new Vec3(0, 10, 0), new Color(0, 255, 0, 50));
+        meshBuilder.box(new Vec3(0.0f, 0.0f, 0.0f), 1.0, new Color(255, 100, 100, 100));
         QuickMeshBuilder.Mesh mesh = meshBuilder.endBuilding();
         profiler.pop();
 

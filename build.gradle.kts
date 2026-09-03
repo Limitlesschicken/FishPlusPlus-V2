@@ -9,6 +9,11 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	maven {
+		name = "meteor-maven"
+		url = uri("https://maven.meteordev.org/releases")
+	}
 }
 
 dependencies {
@@ -21,6 +26,8 @@ dependencies {
 
 	compileOnly("org.projectlombok:lombok:1.18.46")
 	annotationProcessor("org.projectlombok:lombok:1.18.46")
+
+	implementation("meteordevelopment:orbit:0.2.3")
 }
 
 tasks.processResources {

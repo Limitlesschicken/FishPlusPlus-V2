@@ -19,19 +19,11 @@ public class GuiRenderSystem {
     private final List<GuiRenderSystem.Node> strata = new ArrayList<>();
     private GuiRenderSystem.Node current;
 
-    private static final ProjectionMatrixBuffer matrixBuffer = new ProjectionMatrixBuffer("matrixBuffer");
-
-
-
     public void Render() {
         if (this.current != null) {
             this.current.End();
         }
 
-        Projection proj = new Projection();
-        proj.setupOrtho(0.1f, 1000.0f, mc.getWindow().getWidth(), mc.getWindow().getHeight(), true);
-
-        RenderSystem.setProjectionMatrix(matrixBuffer.getBuffer(proj.getMatrix(new Matrix4f())), ProjectionType.ORTHOGRAPHIC);
 
         for (GuiRenderSystem.Node node : strata) {
             RenderNode(node);
@@ -57,11 +49,11 @@ public class GuiRenderSystem {
         public QuickMeshBuilder.Mesh mesh = null;
 
         boolean building = false;
-        QuickMeshBuilder meshBuilder;
+        QuickMeshBuilder.Render2D meshBuilder;
 
         protected void Begin() {
             building = true;
-            meshBuilder = new QuickMeshBuilder();
+            meshBuilder = new QuickMeshBuilder.Render2D();
             meshBuilder.beginBuilding();
         }
 
@@ -72,7 +64,7 @@ public class GuiRenderSystem {
         }
 
         public void Quad(Vec2 a1, int height, int width, Color color) {
-            meshBuilder.quad2d(a1, a1.add(new Vec2(width, 0)), a1.add(new Vec2(width, height)), a1.add(new Vec2(0, height)), -1, color);
+            meshBuilder.Rect(a1, width, height, color);
         }
     }
 

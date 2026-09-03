@@ -16,10 +16,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.awt.*;
 
-public class QuickMeshBuilder {
-
-
-
+public abstract class QuickMeshBuilder {
     private BufferBuilder bufferBuilder;
 
     private static RenderSystem.AutoStorageIndexBuffer indices;
@@ -36,20 +33,17 @@ public class QuickMeshBuilder {
         profiler.pop();
     }
 
-    public void quad(Vec3 a1, Vec3 a2, Vec3 a3, Vec3 a4, Color color) {
+    protected void quad(Vec3 a1, Vec3 a2, Vec3 a3, Vec3 a4, Color color) {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("Building");
 
-        bufferBuilder.addVertex((float)a1.x, (float)a1.y, (float)a1.z).setColor(color.getRGB());
+
         bufferBuilder.addVertex((float)a2.x, (float)a2.y, (float)a2.z).setColor(color.getRGB());
+        bufferBuilder.addVertex((float)a1.x, (float)a1.y, (float)a1.z).setColor(color.getRGB());
         bufferBuilder.addVertex((float)a3.x, (float)a3.y, (float)a3.z).setColor(color.getRGB());
         bufferBuilder.addVertex((float)a4.x, (float)a4.y, (float)a4.z).setColor(color.getRGB());
 
         profiler.pop();
-    }
-
-    public void quad2d(Vec2 a1, Vec2 a2, Vec2 a3, Vec2 a4, int depth, Color color) {
-        quad(new Vec3(a1.x, a1.y, (float)depth), new Vec3(a2.x, a2.y, (float)depth), new Vec3(a3.x, a3.y, (float)depth), new Vec3(a4.x, a4.y, (float)depth), color);
     }
 
     public Mesh endBuilding() {
@@ -72,5 +66,26 @@ public class QuickMeshBuilder {
     }
 
     public record Mesh(GpuBuffer buffer, GpuBuffer indexBuffer, IndexType indexType, int indexCount) {
+    }
+
+    public static class Render3D extends QuickMeshBuilder {
+        private void BoxSides(Vec3 p1, Vec3 size, Color color) {
+            quad(p1.add(new Vec3(size.x, size.y, size.z)), p1.add(new Vec3(size.x, 0, size.z)), p1.add(new Vec3(size.x, size.y, 0)), p1.add(new Vec3(size.x, 0, 0)), color);
+            quad(p1.add(new Vec3(size.x, 0, 0)), p1.add(new Vec3(size.x, size.y, 0)), p1.add(new Vec3(0, 0, 0)), p1.add(new Vec3(0, size.y, 0)), color);
+            quad(p1.add(new Vec3(0, size.y, 0)), p1.add(new Vec3(0, size.y, size.z)), p1.add(new Vec3(size.x, size.y, 0)), p1.add(new Vec3(size.x, size.y, size.z)), color);
+            quad(p1.add(new Vec3(0, 0, 0)), p1.add(new Vec3(0, 0, size.z)), p1.add(new Vec3(size.x, 0, 0)), p1.add(new Vec3(size.x, 0, size.z)), color);
+            quad(p1.add(new Vec3(size.x, size.y, size.z)), p1.add(new Vec3(size.x, 0, size.z)), p1.add(new Vec3(0, size.y, size.z)), p1.add(new Vec3(0, 0, size.z)), color);
+            quad(p1.add(new Vec3(0, 0, 0)), p1.add(new Vec3(0, 0, size.z)), p1.add(new Vec3(0, size.y, 0)), p1.add(new Vec3(0, size.y, size.z)), color);
+        }
+
+        public void box(Vec3 p1, double size, Color color) {
+            BoxSides(p1.subtract(0.5), new Vec3(size, size, size), color);
+        }
+    }
+
+    public static class Render2D extends QuickMeshBuilder {
+        public void Rect(Vec2 p1, int width, int height, Color color) {
+            quad(new Vec3(p1.x, p1.y, -1.0f), new Vec3(p1.x + width, p1.y, -1.0f), new Vec3(p1.x, p1.y + height, -1.0f), new Vec3(p1.x + width, p1.y + height, -1.0f), color);
+        }
     }
 }
