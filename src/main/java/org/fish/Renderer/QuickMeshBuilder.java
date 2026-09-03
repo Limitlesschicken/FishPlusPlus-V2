@@ -18,7 +18,7 @@ import java.awt.*;
 
 public class QuickMeshBuilder {
 
-    private static final GpuBuffer renderBuffer = RenderSystem.getDevice().createBuffer(() -> "FishplusPlus buffer", 40, 500);
+
 
     private BufferBuilder bufferBuilder;
 
@@ -55,6 +55,8 @@ public class QuickMeshBuilder {
     public Mesh endBuilding() {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("EndDrawing");
+
+        GpuBuffer renderBuffer = RenderSystem.getDevice().createBuffer(() -> "FishplusPlus buffer", 40, 500);
 
         CommandEncoder commandEncoder = RenderSystem.getDevice().createCommandEncoder();
         try (MeshData meshData = bufferBuilder.buildOrThrow()) {

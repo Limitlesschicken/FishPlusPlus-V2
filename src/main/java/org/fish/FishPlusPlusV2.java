@@ -20,8 +20,6 @@ public class FishPlusPlusV2 implements ClientModInitializer {
 	public void onInitializeClient() {
 		mc = Minecraft.getInstance();
 		RenderPipelines.init();
-
-
 	}
 
 

@@ -1,13 +1,9 @@
 package org.fish.mixin;
 
-import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.Projection;
-import net.minecraft.client.renderer.ProjectionMatrixBuffer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -38,8 +34,7 @@ public class LevelRendererMixin {
         profiler.push("Mesh build");
         QuickMeshBuilder meshBuilder = new QuickMeshBuilder();
         meshBuilder.beginBuilding();
-        //meshBuilder.quad(new Vec3(0, 0, 0), new Vec3(10, 0, 0), new Vec3(10, 10, 0), new Vec3(0, 10, 0), new Color(0, 255, 0, 50));
-        meshBuilder.quad2d(new Vec2(0, 0), new Vec2(10, 0), new Vec2(10, 10), new Vec2(0, 10), -1, new Color(0, 255, 0, 50));
+        meshBuilder.quad(new Vec3(0, 0, 0), new Vec3(10, 0, 0), new Vec3(10, 10, 0), new Vec3(0, 10, 0), new Color(0, 255, 0, 50));
         QuickMeshBuilder.Mesh mesh = meshBuilder.endBuilding();
         profiler.pop();
 

@@ -29,21 +29,13 @@ public class GameRendererMixin {
     @Inject(method = "render", at = @At("TAIL"))
     public void render(final DeltaTracker deltaTracker, final boolean advanceGameTime, CallbackInfo ci) {
         GuiRenderSystem guiRenderer = new GuiRenderSystem();
-        guiRenderer.NextStratum();
 
-        QuickMeshBuilder meshBuilder = new QuickMeshBuilder();
-        meshBuilder.beginBuilding();
-        meshBuilder.quad2d(new Vec2(0, 0), new Vec2(100, 0), new Vec2(100, 100), new Vec2(0, 100), -1, new Color(255, 0, 0, 50));
-        QuickMeshBuilder.Mesh mesh = meshBuilder.endBuilding();
+        GuiRenderSystem.Node backGround = guiRenderer.NextStratum();
+        backGround.Quad(new Vec2(0, 0), 100, 100, new Color(255, 0, 0, 255));
 
-        GuiRenderSystem.GuiDrawCommand command = new GuiRenderSystem.GuiDrawCommand(mesh);
+        GuiRenderSystem.Node foreGround = guiRenderer.NextStratum();
+        foreGround.Quad(new Vec2(50, 0), 100, 100, new Color(0, 255, 0, 255));
 
-        guiRenderer.AddDrawCommand(command);
-
-        Projection proj = new Projection();
-        proj.setupOrtho(0.1f, 1000.0f, mc.getWindow().getWidth(), mc.getWindow().getHeight(), true);
-
-        RenderSystem.setProjectionMatrix(matrixBuffer.getBuffer(proj.getMatrix(new Matrix4f())), ProjectionType.ORTHOGRAPHIC);
-        guiRenderer.Render(new Matrix4f());
+        guiRenderer.Render();
     }
 }
