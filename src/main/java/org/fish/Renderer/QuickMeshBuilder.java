@@ -27,7 +27,7 @@ public abstract class QuickMeshBuilder {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("BeginBuilding");
 
-        ByteBufferBuilder byteBufferBuilder = new ByteBufferBuilder(500);
+        ByteBufferBuilder byteBufferBuilder = new ByteBufferBuilder(5000);
         bufferBuilder = new BufferBuilder(byteBufferBuilder, line ? PrimitiveTopology.DEBUG_LINES : PrimitiveTopology.QUADS, DefaultVertexFormat.POSITION_COLOR);
 
         //we use quads on the indices to get the right index order like "0, 1, 2, 0, 2, 3" instead of triangles which gives "1, 2, 3, 4"
@@ -63,14 +63,14 @@ public abstract class QuickMeshBuilder {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("EndBuilding");
 
-        GpuBuffer renderBuffer = RenderSystem.getDevice().createBuffer(() -> "FishplusPlus buffer", 40, 500);
-
         CommandEncoder commandEncoder = RenderSystem.getDevice().createCommandEncoder();
         MeshData meshData = bufferBuilder.build();
         if (meshData == null) {
             profiler.pop();
             return null;
         }
+
+        GpuBuffer renderBuffer = RenderSystem.getDevice().createBuffer(() -> "FishplusPlus buffer", 40, meshData.vertexBuffer().remaining());
 
         commandEncoder.writeToBuffer(renderBuffer.slice(), meshData.vertexBuffer());
 
