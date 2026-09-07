@@ -49,16 +49,16 @@ public class GuiRenderSystem {
             building = true;
             meshBuilder = new QuickMeshBuilder.Render2D();
             meshBuilderLine = new QuickMeshBuilder.Render2D();
-            meshBuilder.beginBuilding(false);
-            meshBuilderLine.beginBuilding(true);
+            meshBuilder.BeginBuilding(false);
+            meshBuilderLine.BeginBuilding(true);
         }
 
         protected void End() {
             if (!building)
                 throw new RuntimeException("Not building gui mesh");
             building = false;
-            mesh = meshBuilder.endBuilding();
-            meshLine = meshBuilderLine.endBuilding();
+            mesh = meshBuilder.EndBuilding();
+            meshLine = meshBuilderLine.EndBuilding();
         }
 
         public void Quad(Vec2 a1, int width, int height, Color color) {

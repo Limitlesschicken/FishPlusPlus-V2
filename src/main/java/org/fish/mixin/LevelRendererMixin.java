@@ -7,10 +7,10 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.fish.Renderer.QuickMeshBuilder;
 import org.fish.Renderer.Renderer;
+import org.fish.Renderer.WorldRenderSystem;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Vector4f;
@@ -21,8 +21,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 
-import static org.fish.FishPlusPlusV2.mc;
-
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
 
@@ -32,13 +30,13 @@ public class LevelRendererMixin {
         profiler.push("FishPlusPlus Render");
 
         profiler.push("Mesh build");
-        QuickMeshBuilder.Render3D meshBuilder = new QuickMeshBuilder.Render3D();
-        meshBuilder.beginBuilding(false);
-        meshBuilder.box(new Vec3(0.0f, 0.0f, 0.0f), 2.0, new Color(255, 100, 100, 100));
-        QuickMeshBuilder.Mesh mesh = meshBuilder.endBuilding();
+        WorldRenderSystem renderSystem = new WorldRenderSystem();
+        renderSystem.BeginBuilding();
+        renderSystem.Box(new Vec3(0, 0, 0), new Vec3(2.0f, 2.0f, 2.0f), new Color(255, 100, 100, 50), new Color(255, 100, 100, 255));
+        renderSystem.EndBuilding();
         profiler.pop();
 
-        Renderer.RenderMesh(mesh, new Matrix4f(modelViewMatrix), true);
+        renderSystem.Render(new Matrix4f(modelViewMatrix));
         profiler.pop();
     }
 }

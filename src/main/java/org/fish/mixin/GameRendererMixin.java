@@ -2,7 +2,6 @@ package org.fish.mixin;
 
 import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.client.rendering.v1.advancement.AdvancementRenderContext;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.Projection;
@@ -38,18 +37,10 @@ public class GameRendererMixin {
 
         RenderSystem.setProjectionMatrix(matrixBuffer.getBuffer(proj.getMatrix(new Matrix4f())), ProjectionType.ORTHOGRAPHIC);
 
-        QuickMeshBuilder.Render2D render2D = new QuickMeshBuilder.Render2D();
-        render2D.beginBuilding(false);
-
-        EVENT_BUS.post(new EventRender2D(render2D));
-
-        Renderer.RenderMesh(render2D.endBuilding(), new Matrix4f(), false);
-
         GuiRenderSystem guiRenderer = new GuiRenderSystem();
 
         GuiRenderSystem.Node backGround = guiRenderer.NextStratum();
-        backGround.Quad(new Vec2(0, 0), 100, 100, new Color(255, 0, 0, 255));
-        backGround.Line(new Vec2(300, 200), new Vec2(550, 500), new Color(255, 0, 0, 255));
+        EVENT_BUS.post(new EventRender2D(backGround));
 
         GuiRenderSystem.Node foreGround = guiRenderer.NextStratum();
         foreGround.Quad(new Vec2(100, 0), 100, 100, new Color(0, 255, 0, 255));

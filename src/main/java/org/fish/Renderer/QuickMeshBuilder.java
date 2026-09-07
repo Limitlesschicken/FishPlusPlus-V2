@@ -23,7 +23,7 @@ public abstract class QuickMeshBuilder {
 
     boolean line = false;
 
-    public void beginBuilding(boolean line) {
+    public void BeginBuilding(boolean line) {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("BeginBuilding");
 
@@ -59,7 +59,7 @@ public abstract class QuickMeshBuilder {
         profiler.pop();
     }
 
-    public Mesh endBuilding() {
+    public Mesh EndBuilding() {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("EndBuilding");
 
@@ -85,7 +85,7 @@ public abstract class QuickMeshBuilder {
     }
 
     public static class Render3D extends QuickMeshBuilder {
-        private void BoxSides(Vec3 p1, Vec3 size, Color color) {
+        public void BoxSides(Vec3 p1, Vec3 size, Color color) {
             quad(p1.add(new Vec3(size.x, size.y, size.z)), p1.add(new Vec3(size.x, 0, size.z)), p1.add(new Vec3(size.x, size.y, 0)), p1.add(new Vec3(size.x, 0, 0)), color);
             quad(p1.add(new Vec3(size.x, 0, 0)), p1.add(new Vec3(size.x, size.y, 0)), p1.add(new Vec3(0, 0, 0)), p1.add(new Vec3(0, size.y, 0)), color);
             quad(p1.add(new Vec3(0, size.y, 0)), p1.add(new Vec3(0, size.y, size.z)), p1.add(new Vec3(size.x, size.y, 0)), p1.add(new Vec3(size.x, size.y, size.z)), color);
@@ -94,9 +94,25 @@ public abstract class QuickMeshBuilder {
             quad(p1.add(new Vec3(0, 0, 0)), p1.add(new Vec3(0, 0, size.z)), p1.add(new Vec3(0, size.y, 0)), p1.add(new Vec3(0, size.y, size.z)), color);
         }
 
-        public void box(Vec3 p1, double size, Color color) {
-            BoxSides(p1.subtract(0.5), new Vec3(size, size, size), color);
+        public void BoxLines(Vec3 p1, Vec3 size, Color color) {
+            Line(p1, p1.add(size.x, 0, 0), color);
+            Line(p1, p1.add(0, size.y, 0), color);
+            Line(p1, p1.add(0, 0, size.z), color);
+
+            Line(p1.add(size.x, size.y, size.z), p1.add(size.x, size.y, 0), color);
+            Line(p1.add(size.x, size.y, size.z), p1.add(0, size.y, size.z), color);
+            Line(p1.add(size.x, size.y, size.z), p1.add(size.x, 0, size.z), color);
+
+            Line(p1.add(size.x, 0, 0), p1.add(size.x, 0, size.z), color);
+            Line(p1.add(size.x, 0, 0), p1.add(size.x, size.y, 0), color);
+            Line(p1.add(size.x, size.y, 0), p1.add(0, size.y, 0), color);
+
+            Line(p1.add(0, 0, size.z), p1.add(size.x, 0, size.z), color);
+            Line(p1.add(0, 0, size.z), p1.add(0, size.y, size.z), color);
+            Line(p1.add(0, size.y, size.z), p1.add(0, size.y, 0), color);
+
         }
+
         public void Line(Vec3 p1, Vec3 p2, Color color) {
             line(p1, p2, color);
         }
