@@ -42,9 +42,6 @@ public class GameRendererMixin {
         GuiRenderSystem.Node backGround = guiRenderer.NextStratum();
         EVENT_BUS.post(new EventRender2D(backGround));
 
-        GuiRenderSystem.Node foreGround = guiRenderer.NextStratum();
-        foreGround.Quad(new Vec2(100, 0), 100, 100, new Color(0, 255, 0, 255));
-
         guiRenderer.Render();
     }
 }

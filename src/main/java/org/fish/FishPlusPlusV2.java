@@ -8,9 +8,12 @@ import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec2;
 import org.fish.Events.EventRender2D;
+import org.fish.Events.EventRender3D;
 import org.fish.Renderer.RenderPipelines;
+import org.fish.Utils.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +43,16 @@ public class FishPlusPlusV2 implements ClientModInitializer {
 	@EventHandler
 	public void onRender2D(EventRender2D event) {
 		event.node.Quad(new Vec2(200.0f, 200.0f), 100, 100, Color.BLUE);
+	}
+
+	@EventHandler
+	public void onRender3D(EventRender3D event) {
+		for (Entity entity : EntityUtils.GetEntites()) {
+			if (entity == mc.player)
+				continue;
+
+			event.renderer.Box(entity, new Color(255, 100, 100, 50), new Color(255, 100, 100, 255));
+		}
 	}
 
 

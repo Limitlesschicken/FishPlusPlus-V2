@@ -8,6 +8,8 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.phys.Vec3;
+import org.fish.Events.EventRender2D;
+import org.fish.Events.EventRender3D;
 import org.fish.Renderer.QuickMeshBuilder;
 import org.fish.Renderer.Renderer;
 import org.fish.Renderer.WorldRenderSystem;
@@ -21,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 
+import static org.fish.FishPlusPlusV2.EVENT_BUS;
+
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
 
@@ -32,7 +36,9 @@ public class LevelRendererMixin {
         profiler.push("Mesh build");
         WorldRenderSystem renderSystem = new WorldRenderSystem();
         renderSystem.BeginBuilding();
-        renderSystem.Box(new Vec3(0, 0, 0), new Vec3(2.0f, 2.0f, 2.0f), new Color(255, 100, 100, 50), new Color(255, 100, 100, 255));
+
+        EVENT_BUS.post(new EventRender3D(renderSystem));
+
         renderSystem.EndBuilding();
         profiler.pop();
 

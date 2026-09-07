@@ -3,5 +3,9 @@ package org.fish.Events;
 import org.fish.Renderer.WorldRenderSystem;
 
 public class EventRender3D {
-    WorldRenderSystem renderer;
+    public WorldRenderSystem renderer;
+
+    public EventRender3D(WorldRenderSystem renderSystem) {
+        this.renderer = renderSystem;
+    }
 }
