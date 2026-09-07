@@ -67,8 +67,10 @@ public abstract class QuickMeshBuilder {
 
         CommandEncoder commandEncoder = RenderSystem.getDevice().createCommandEncoder();
         MeshData meshData = bufferBuilder.build();
-        if (meshData == null)
+        if (meshData == null) {
+            profiler.pop();
             return null;
+        }
 
         commandEncoder.writeToBuffer(renderBuffer.slice(), meshData.vertexBuffer());
 

@@ -19,8 +19,10 @@ public class Renderer {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("RenderPass");
 
-        if (mesh == null)
+        if (mesh == null) {
+            profiler.pop();
             return;
+        }
 
         CommandEncoder commandEncoder = RenderSystem.getDevice().createCommandEncoder();
 
