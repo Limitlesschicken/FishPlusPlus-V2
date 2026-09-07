@@ -1,19 +1,11 @@
 package org.fish.Renderer;
 
-import com.mojang.blaze3d.ProjectionType;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.renderer.Projection;
-import net.minecraft.client.renderer.ProjectionMatrixBuffer;
 import net.minecraft.world.phys.Vec2;
-import org.fish.FishPlusPlusV2;
 import org.joml.Matrix4f;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.fish.FishPlusPlusV2.mc;
 
 public class GuiRenderSystem {
     private final List<GuiRenderSystem.Node> strata = new ArrayList<>();
@@ -24,7 +16,6 @@ public class GuiRenderSystem {
             this.current.End();
         }
 
-
         for (GuiRenderSystem.Node node : strata) {
             RenderNode(node);
         }
@@ -32,6 +23,7 @@ public class GuiRenderSystem {
 
     private void RenderNode(GuiRenderSystem.Node node) {
         Renderer.RenderMesh(node.mesh, new Matrix4f(), false);
+        Renderer.RenderMesh(node.meshLine, new Matrix4f(), false);
     }
 
     public Node NextStratum() {
@@ -47,24 +39,33 @@ public class GuiRenderSystem {
 
     public class Node {
         public QuickMeshBuilder.Mesh mesh = null;
+        public QuickMeshBuilder.Mesh meshLine = null;
 
         boolean building = false;
         QuickMeshBuilder.Render2D meshBuilder;
+        QuickMeshBuilder.Render2D meshBuilderLine;
 
         protected void Begin() {
             building = true;
             meshBuilder = new QuickMeshBuilder.Render2D();
-            meshBuilder.beginBuilding();
+            meshBuilderLine = new QuickMeshBuilder.Render2D();
+            meshBuilder.beginBuilding(false);
+            meshBuilderLine.beginBuilding(true);
         }
 
         protected void End() {
             if (!building)
                 throw new RuntimeException("Not building gui mesh");
+            building = false;
             mesh = meshBuilder.endBuilding();
+            meshLine = meshBuilderLine.endBuilding();
         }
 
-        public void Quad(Vec2 a1, int height, int width, Color color) {
+        public void Quad(Vec2 a1, int width, int height, Color color) {
             meshBuilder.Rect(a1, width, height, color);
+        }
+        public void Line(Vec2 a1, Vec2 a2, Color color) {
+            meshBuilderLine.Line(a1, a2, color);
         }
     }
 

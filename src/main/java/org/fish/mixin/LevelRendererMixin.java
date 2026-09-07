@@ -33,8 +33,8 @@ public class LevelRendererMixin {
 
         profiler.push("Mesh build");
         QuickMeshBuilder.Render3D meshBuilder = new QuickMeshBuilder.Render3D();
-        meshBuilder.beginBuilding();
-        meshBuilder.box(new Vec3(0.0f, 0.0f, 0.0f), 1.0, new Color(255, 100, 100, 100));
+        meshBuilder.beginBuilding(false);
+        meshBuilder.box(new Vec3(0.0f, 0.0f, 0.0f), 2.0, new Color(255, 100, 100, 100));
         QuickMeshBuilder.Mesh mesh = meshBuilder.endBuilding();
         profiler.pop();
 

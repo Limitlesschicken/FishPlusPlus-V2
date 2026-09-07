@@ -19,12 +19,15 @@ public class Renderer {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("RenderPass");
 
+        if (mesh == null)
+            return;
+
         CommandEncoder commandEncoder = RenderSystem.getDevice().createCommandEncoder();
 
         RenderTarget mainRenderTarget = mc.gameRenderer.mainRenderTarget();
         RenderPass pass = commandEncoder.createRenderPass(() -> "FishPlusPlus RenderPass", mainRenderTarget.getColorTextureView(), Optional.empty());
 
-        pass.setPipeline(RenderPipelines.DefaultPipeline);
+        pass.setPipeline(mesh.line() ? RenderPipelines.LinesPipeline : RenderPipelines.DefaultPipeline);
         pass.setVertexBuffer(0, mesh.buffer().slice());
         pass.setIndexBuffer(mesh.indexBuffer(), mesh.indexType());
 

@@ -19,6 +19,7 @@ public class RenderPipelines {
 
     public static RenderPipeline.Snippet DefaultSnippet;
     public static RenderPipeline DefaultPipeline;
+    public static RenderPipeline LinesPipeline;
 
     //add pipelines to an array for storage
     public static RenderPipeline register(RenderPipeline pipeline) {
@@ -33,7 +34,6 @@ public class RenderPipelines {
                 .withCull(false)
                 .withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
                 .withPolygonMode(PolygonMode.FILL)
-                .withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
                 .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
                 .buildSnippet();
 
@@ -42,7 +42,17 @@ public class RenderPipelines {
                         .withLocation(FishPlusPlusV2.id("pipeline/default"))
                         .withVertexShader(FishPlusPlusV2.id("default"))
                         .withFragmentShader(FishPlusPlusV2.id("default"))
+                        .withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
                         .build()
                 );
+
+        LinesPipeline = register(
+                RenderPipeline.builder(DefaultSnippet)
+                        .withLocation(FishPlusPlusV2.id("pipeline/lines"))
+                        .withVertexShader(FishPlusPlusV2.id("default"))
+                        .withFragmentShader(FishPlusPlusV2.id("default"))
+                        .withPrimitiveTopology(PrimitiveTopology.DEBUG_LINES)
+                        .build()
+        );
     }
 }
