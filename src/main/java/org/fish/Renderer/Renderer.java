@@ -1,10 +1,11 @@
 package org.fish.Renderer;
 
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.systems.CommandEncoder;
-import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.commands.CommandEncoder;
+import com.mojang.renderpearl.api.commands.RenderPass;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import net.minecraft.client.Camera;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -29,7 +30,7 @@ public class Renderer {
         RenderTarget mainRenderTarget = mc.gameRenderer.mainRenderTarget();
         RenderPass pass = commandEncoder.createRenderPass(() -> "FishPlusPlus RenderPass", mainRenderTarget.getColorTextureView(), Optional.empty());
 
-        pass.setPipeline(mesh.line() ? RenderPipelines.LinesPipeline : RenderPipelines.DefaultPipeline);
+        pass.setPipeline(RenderSystem.getCompiledPipeline(mesh.line() ? RenderPipelines.LinesPipeline : RenderPipelines.DefaultPipeline));
         pass.setVertexBuffer(0, mesh.buffer().slice());
         pass.setIndexBuffer(mesh.indexBuffer(), mesh.indexType());
 
@@ -51,6 +52,8 @@ public class Renderer {
         profiler.popPush("Draw");
         pass.drawIndexed(mesh.indexCount(), 1, 0, 0, 0);
         profiler.pop();
+
+        pass.close();
     }
 
 }

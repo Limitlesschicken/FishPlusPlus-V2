@@ -1,7 +1,8 @@
 package org.fish.mixin;
 
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
+import net.minecraft.client.Camera;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
@@ -24,12 +25,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.awt.*;
 
 import static org.fish.FishPlusPlusV2.EVENT_BUS;
+import static org.fish.FishPlusPlusV2.mc;
 
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
 
-    @Inject(method = "render", at = @At("TAIL"))
-    public void onRenderTail(final GraphicsResourceAllocator resourceAllocator, final DeltaTracker deltaTracker, final boolean renderOutline, final CameraRenderState cameraState, final Matrix4fc modelViewMatrix, final GpuBufferSlice terrainFog, final Vector4f fogColor, final boolean shouldRenderSky, CallbackInfo ci) {
+    @Inject(method = "render", at = @At(value = "TAIL"))
+    public void onRenderTail(final GraphicsResourceAllocator resourceAllocator, final boolean renderOutline, final CameraRenderState cameraState, final GpuBufferSlice terrainFog, final Vector4f fogColor, final boolean shouldRenderSky, final boolean consistentDepthRequired, CallbackInfo ci) {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("FishPlusPlus Render");
 
@@ -37,12 +39,12 @@ public class LevelRendererMixin {
         WorldRenderSystem renderSystem = new WorldRenderSystem();
         renderSystem.BeginBuilding();
 
-        EVENT_BUS.post(new EventRender3D(renderSystem));
+        EVENT_BUS.post(new EventRender3D(renderSystem, mc.getDeltaTracker().getGameTimeDeltaPartialTick(false)));
 
         renderSystem.EndBuilding();
         profiler.pop();
 
-        renderSystem.Render(new Matrix4f(modelViewMatrix));
+        renderSystem.Render(cameraState.viewRotationMatrix);
         profiler.pop();
     }
 }

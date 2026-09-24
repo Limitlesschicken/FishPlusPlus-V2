@@ -1,6 +1,7 @@
 package org.fish.Renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -36,6 +37,15 @@ public class WorldRenderSystem {
 
     public void Box(Entity entity, Color insideColor, Color outlineColor) {
         Box(entity.getBoundingBox(), insideColor, outlineColor);
+    }
+
+    public void Box(Entity entity, float tickDelta, Color insideColor, Color outlineColor) {
+        if (entity.oldPosition().equals(new Vec3(0.0, 0.0, 0.0)))
+            entity.setOldPosAndRot(entity.position(), entity.yRotO, entity.xRotO);
+
+        Vec3 drawPos = Mth.lerp(tickDelta, entity.oldPosition(), entity.position());
+        Vec3 offset = drawPos.subtract(entity.position());
+        Box(entity.getBoundingBox().move(offset), insideColor, outlineColor);
     }
 
     public void EndBuilding() {

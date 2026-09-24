@@ -1,11 +1,7 @@
 package org.fish.Renderer;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.pipeline.BlendFunction;
-import com.mojang.blaze3d.pipeline.ColorTargetState;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
-import com.mojang.blaze3d.platform.PolygonMode;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.renderpearl.api.pipeline.*;
 import net.minecraft.client.renderer.BindGroupLayouts;
 import org.fish.FishPlusPlusV2;
 
@@ -18,6 +14,7 @@ public class RenderPipelines {
     public static List<RenderPipeline> RenderPipelines = new ArrayList<>();
 
     public static RenderPipeline.Snippet DefaultSnippet;
+
     public static RenderPipeline DefaultPipeline;
     public static RenderPipeline LinesPipeline;
 
@@ -30,7 +27,8 @@ public class RenderPipelines {
     public static void init() {
         //just a pipeline for basic 3d rendering. position and color
         DefaultSnippet = RenderPipeline.builder()
-                .withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
+                .withBindGroupLayout(BindGroupLayouts.PROJECTION)
+                .withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
                 .withCull(false)
                 .withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
                 .withPolygonMode(PolygonMode.FILL)
