@@ -3,9 +3,9 @@
 	"id": "fishplusplusv2",
 	"version": "${version}",
 	"name": "FishPlusPlusV2",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "this is version 2 of FishPlusPlus for minecraft",
 	"authors": [
-		"Me!"
+		"LimitlessChicken"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
