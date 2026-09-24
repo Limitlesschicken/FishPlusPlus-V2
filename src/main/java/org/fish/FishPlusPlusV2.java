@@ -6,12 +6,10 @@ import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ClientModInitializer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 import org.fish.Events.EventRender2D;
 import org.fish.Events.EventRender3D;
 import org.fish.Renderer.RenderPipelines;

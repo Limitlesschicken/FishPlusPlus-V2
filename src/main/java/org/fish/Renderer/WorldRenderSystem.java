@@ -1,6 +1,5 @@
 package org.fish.Renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;

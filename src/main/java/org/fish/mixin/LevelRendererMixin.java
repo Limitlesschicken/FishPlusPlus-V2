@@ -2,27 +2,17 @@ package org.fish.mixin;
 
 import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
-import net.minecraft.client.Camera;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.phys.Vec3;
-import org.fish.Events.EventRender2D;
 import org.fish.Events.EventRender3D;
-import org.fish.Renderer.QuickMeshBuilder;
-import org.fish.Renderer.Renderer;
 import org.fish.Renderer.WorldRenderSystem;
-import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
 import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.awt.*;
 
 import static org.fish.FishPlusPlusV2.EVENT_BUS;
 import static org.fish.FishPlusPlusV2.mc;
