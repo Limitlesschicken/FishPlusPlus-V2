@@ -6,8 +6,11 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.Projection;
 import net.minecraft.client.renderer.ProjectionMatrixBuffer;
 import net.minecraft.client.renderer.state.GameRenderState;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import org.fish.Events.EventRender2D;
 import org.fish.Renderer.GuiRenderSystem;
+import org.fish.Renderer.Renderer;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,8 +33,9 @@ public class GameRendererMixin {
 
     @Inject(method = "render", at = @At("TAIL"))
     public void render(CallbackInfo ci) {
-        if (!gameRenderState.shouldRenderLevel)
-            return;
+        ProfilerFiller profiler = Profiler.get();
+        profiler.push("FishPlusPlus 2D Render");
+
         Projection proj = new Projection();
         proj.setupOrtho(0.1f, 1000.0f, mc.getWindow().getWidth(), mc.getWindow().getHeight(), true);
 
@@ -39,9 +43,18 @@ public class GameRendererMixin {
 
         GuiRenderSystem guiRenderer = new GuiRenderSystem();
 
+        profiler.push("Build");
         GuiRenderSystem.Node backGround = guiRenderer.NextStratum();
         EVENT_BUS.post(new EventRender2D(backGround));
 
+        profiler.popPush("Render");
+
         guiRenderer.Render();
+        Renderer.TextRenderer();
+
+        profiler.pop();
+
+        profiler.pop();
+
     }
 }

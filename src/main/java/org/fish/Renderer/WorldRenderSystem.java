@@ -21,8 +21,8 @@ public class WorldRenderSystem {
         building = true;
         meshBuilder = new QuickMeshBuilder.Render3D();
         meshBuilderLine = new QuickMeshBuilder.Render3D();
-        meshBuilder.BeginBuilding(false);
-        meshBuilderLine.BeginBuilding(true);
+        meshBuilder.BeginBuilding(false, false);
+        meshBuilderLine.BeginBuilding(true, false);
     }
 
     public void Box(Vec3 p1, Vec3 size, Color insideColor, Color outlineColor) {
@@ -53,7 +53,7 @@ public class WorldRenderSystem {
     }
 
     public void Render(Matrix4f modelView) {
-        Renderer.RenderMesh(mesh, modelView, true);
-        Renderer.RenderMesh(meshLine, modelView, true);
+        Renderer.RenderMesh(mesh, modelView, new Renderer.RenderDescription(RenderPipelines.DefaultPipeline, true, null));
+        Renderer.RenderMesh(meshLine, modelView, new Renderer.RenderDescription(RenderPipelines.LinesPipeline, true, null));
     }
 }

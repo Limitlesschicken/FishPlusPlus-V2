@@ -14,9 +14,11 @@ public class RenderPipelines {
     public static List<RenderPipeline> RenderPipelines = new ArrayList<>();
 
     public static RenderPipeline.Snippet DefaultSnippet;
+    public static RenderPipeline.Snippet TextureSnippet;
 
     public static RenderPipeline DefaultPipeline;
     public static RenderPipeline LinesPipeline;
+    public static RenderPipeline TextPipeline;
 
     //add pipelines to an array for storage
     public static RenderPipeline register(RenderPipeline pipeline) {
@@ -31,6 +33,16 @@ public class RenderPipelines {
                 .withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
                 .withCull(false)
                 .withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
+                .withPolygonMode(PolygonMode.FILL)
+                .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
+                .buildSnippet();
+
+        TextureSnippet = RenderPipeline.builder()
+                .withBindGroupLayout(BindGroupLayouts.PROJECTION)
+                .withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
+                .withBindGroupLayout(BindGroupLayouts.SAMPLER0)
+                .withCull(false)
+                .withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
                 .withPolygonMode(PolygonMode.FILL)
                 .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
                 .buildSnippet();
@@ -50,6 +62,14 @@ public class RenderPipelines {
                         .withVertexShader(FishPlusPlusV2.id("default"))
                         .withFragmentShader(FishPlusPlusV2.id("default"))
                         .withPrimitiveTopology(PrimitiveTopology.DEBUG_LINES)
+                        .build()
+        );
+        TextPipeline = register(
+                RenderPipeline.builder(TextureSnippet)
+                        .withLocation(FishPlusPlusV2.id("pipeline/text"))
+                        .withVertexShader(FishPlusPlusV2.id("text"))
+                        .withFragmentShader(FishPlusPlusV2.id("text"))
+                        .withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
                         .build()
         );
     }

@@ -22,8 +22,8 @@ public class GuiRenderSystem {
     }
 
     private void RenderNode(GuiRenderSystem.Node node) {
-        Renderer.RenderMesh(node.mesh, new Matrix4f(), false);
-        Renderer.RenderMesh(node.meshLine, new Matrix4f(), false);
+        Renderer.RenderMesh(node.mesh, new Renderer.RenderDescription(RenderPipelines.DefaultPipeline, false, null));
+        Renderer.RenderMesh(node.meshLine, new Renderer.RenderDescription(RenderPipelines.LinesPipeline, false, null));
     }
 
     public Node NextStratum() {
@@ -49,8 +49,8 @@ public class GuiRenderSystem {
             building = true;
             meshBuilder = new QuickMeshBuilder.Render2D();
             meshBuilderLine = new QuickMeshBuilder.Render2D();
-            meshBuilder.BeginBuilding(false);
-            meshBuilderLine.BeginBuilding(true);
+            meshBuilder.BeginBuilding(false, false);
+            meshBuilderLine.BeginBuilding(true, false);
         }
 
         protected void End() {

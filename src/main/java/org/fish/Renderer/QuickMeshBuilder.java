@@ -23,12 +23,15 @@ public abstract class QuickMeshBuilder {
 
     boolean line = false;
 
-    public void BeginBuilding(boolean line) {
+    public void BeginBuilding(boolean line, boolean textured) {
         ProfilerFiller profiler = Profiler.get();
         profiler.push("BeginBuilding");
 
         ByteBufferBuilder byteBufferBuilder = new ByteBufferBuilder(5000);
-        bufferBuilder = new BufferBuilder(byteBufferBuilder, line ? PrimitiveTopology.DEBUG_LINES : PrimitiveTopology.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        bufferBuilder = new BufferBuilder(
+                byteBufferBuilder,
+                line ? PrimitiveTopology.DEBUG_LINES : PrimitiveTopology.QUADS,
+                textured ? DefaultVertexFormat.POSITION_TEX_COLOR : DefaultVertexFormat.POSITION_COLOR);
 
         //we use quads on the indices to get the right index order like "0, 1, 2, 0, 2, 3" instead of triangles which gives "1, 2, 3, 4"
         indices = RenderSystem.getSequentialBuffer(line ? PrimitiveTopology.DEBUG_LINES : PrimitiveTopology.QUADS);
@@ -45,6 +48,18 @@ public abstract class QuickMeshBuilder {
         bufferBuilder.addVertex((float)a1.x, (float)a1.y, (float)a1.z).setColor(color.getRGB());
         bufferBuilder.addVertex((float)a3.x, (float)a3.y, (float)a3.z).setColor(color.getRGB());
         bufferBuilder.addVertex((float)a4.x, (float)a4.y, (float)a4.z).setColor(color.getRGB());
+
+        profiler.pop();
+    }
+
+    protected void quadUV(Vec3 a1, Vec3 a2, Vec3 a3, Vec3 a4, Vec2 uv1, Vec2 uv2, Vec2 uv3, Vec2 uv4, Color color) {
+        ProfilerFiller profiler = Profiler.get();
+        profiler.push("Building");
+
+        bufferBuilder.addVertex((float)a2.x, (float)a2.y, (float)a2.z).setUv(uv1.x, uv1.y).setColor(color.getRGB());
+        bufferBuilder.addVertex((float)a1.x, (float)a1.y, (float)a1.z).setUv(uv2.x, uv2.y).setColor(color.getRGB());
+        bufferBuilder.addVertex((float)a3.x, (float)a3.y, (float)a3.z).setUv(uv3.x, uv3.y).setColor(color.getRGB());
+        bufferBuilder.addVertex((float)a4.x, (float)a4.y, (float)a4.z).setUv(uv4.x, uv4.y).setColor(color.getRGB());
 
         profiler.pop();
     }

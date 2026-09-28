@@ -28,6 +28,7 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok:1.18.46")
 
 	implementation("meteordevelopment:orbit:0.2.3")
+	include("meteordevelopment:orbit:0.2.3")
 }
 
 tasks.processResources {
