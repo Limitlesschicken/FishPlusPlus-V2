@@ -145,6 +145,8 @@ public abstract class QuickMeshBuilder {
         public void Text(String text, Vec2 pos, float scale, Color color, Font font) {
             if (font == null)
                 return;
+            ProfilerFiller profiler = Profiler.get();
+            profiler.push("Text building");
             float x = pos.x;
             for (char c : text.toCharArray()) {
 
@@ -178,6 +180,7 @@ public abstract class QuickMeshBuilder {
                         color
                 );
             }
+            profiler.pop();
         }
 
         public void Line(Vec2 p1, Vec2 p2, Color color) {

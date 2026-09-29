@@ -44,7 +44,7 @@ public class FishPlusPlusV2 implements ClientModInitializer {
 	@EventHandler
 	public void onRender2D(EventRender2D event) {
 		event.node.Quad(new Vec2(200.0f, 200.0f), 100, 100, Color.BLUE);
-		event.node.Text("YESSSS", new Vec2(200.0f, 200.0f), 1, Color.RED);
+		event.node.Text("test :D", new Vec2(200.0f, 200.0f), 1, Color.WHITE);
 	}
 
 	@EventHandler
