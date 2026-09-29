@@ -43,7 +43,7 @@ public class GameRendererMixin {
 
         profiler.push("Build");
         GuiRenderSystem.Node backGround = guiRenderer.NextStratum();
-        EVENT_BUS.post(new EventRender2D(backGround));
+        EVENT_BUS.post(new EventRender2D(backGround, mc.getDeltaTracker().getGameTimeDeltaPartialTick(false)));
 
         profiler.popPush("Render");
 
