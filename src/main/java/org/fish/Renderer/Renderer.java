@@ -7,9 +7,11 @@ import com.mojang.renderpearl.api.commands.CommandEncoder;
 import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.renderpearl.api.pipeline.CompiledRenderPipeline;
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import lombok.Getter;
 import net.minecraft.client.Camera;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
+import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.Text.FontLoader;
 import org.joml.*;
 
@@ -19,7 +21,8 @@ import java.util.function.Consumer;
 import static org.fish.FishPlusPlusV2.mc;
 
 public class Renderer {
-    public static boolean initialized = false;
+    @Getter
+    private static boolean initialized = false;
     public static void Init() {
         FontLoader.LoadFont("fonts/figtree.ttf", "Figtree");
         initialized = true;
@@ -36,6 +39,7 @@ public class Renderer {
 
         CompiledRenderPipeline renderPipeline = RenderSystem.getCompiledPipelineNullable(description.pipeline);
         if (renderPipeline == null) {
+            FishPlusPlusV2.LOGGER.warn("Pipeline not compiled yet: {}", description.pipeline);
             profiler.pop();
             return;
         }

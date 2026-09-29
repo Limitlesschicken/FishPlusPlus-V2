@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.ProjectionMatrixBuffer;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.fish.Events.EventRender2D;
+import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
 import org.fish.Renderer.Renderer;
 import org.joml.Matrix4f;
@@ -16,6 +17,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.io.FileNotFoundException;
 
 import static org.fish.FishPlusPlusV2.EVENT_BUS;
 import static org.fish.FishPlusPlusV2.mc;
@@ -28,7 +31,7 @@ public class GameRendererMixin {
 
     @Inject(method = "render", at = @At("TAIL"))
     public void render(CallbackInfo ci) {
-        if (!Renderer.initialized)
+        if (!Renderer.isInitialized() || !mc.isGameLoadFinished())
             return;
 
         ProfilerFiller profiler = Profiler.get();
