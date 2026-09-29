@@ -1,8 +1,7 @@
 package org.fish.Renderer;
 
 import net.minecraft.world.phys.Vec2;
-import org.fish.Renderer.Text.FontRenderer;
-import org.joml.Matrix4f;
+import org.fish.Renderer.Text.FontLoader;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,8 +25,8 @@ public class GuiRenderSystem {
         Renderer.RenderMesh(node.mesh, new Renderer.RenderDescription(RenderPipelines.DefaultPipeline, false, null));
         Renderer.RenderMesh(node.meshLine, new Renderer.RenderDescription(RenderPipelines.LinesPipeline, false, null));
         Renderer.RenderMesh(node.meshText, new Renderer.RenderDescription(RenderPipelines.TextPipeline, false, pass -> {
-            if (FontRenderer.activeFont != null)
-                pass.setUniform("Sampler0", FontRenderer.activeFont.texture().getTextureView(), FontRenderer.activeFont.texture().getSampler());
+            if (FontLoader.activeFont != null)
+                pass.setUniform("Sampler0", FontLoader.activeFont.texture().getTextureView(), FontLoader.activeFont.texture().getSampler());
         }));
     }
 
@@ -78,8 +77,8 @@ public class GuiRenderSystem {
             meshBuilderLine.Line(a1, a2, color);
         }
         public void Text(String text, Vec2 pos, float size, Color color) {
-            if (FontRenderer.activeFont != null)
-                meshBuilderText.Text(text, pos, size, color, FontRenderer.activeFont);
+            if (FontLoader.activeFont != null)
+                meshBuilderText.Text(text, pos, size, color, FontLoader.activeFont);
         }
     }
 

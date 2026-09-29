@@ -2,14 +2,9 @@ package org.fish.mixin;
 
 import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.FirstPersonHandsAndItemsRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.Projection;
 import net.minecraft.client.renderer.ProjectionMatrixBuffer;
-import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.state.GameRenderState;
-import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.fish.Events.EventRender2D;
@@ -17,7 +12,6 @@ import org.fish.Renderer.GuiRenderSystem;
 import org.fish.Renderer.Renderer;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,9 +25,6 @@ public class GameRendererMixin {
 
     @Unique
     private static final ProjectionMatrixBuffer matrixBuffer = new ProjectionMatrixBuffer("matrixBuffer");
-
-    @Shadow
-    private final GameRenderState gameRenderState = new GameRenderState();
 
     @Inject(method = "render", at = @At("TAIL"))
     public void render(CallbackInfo ci) {

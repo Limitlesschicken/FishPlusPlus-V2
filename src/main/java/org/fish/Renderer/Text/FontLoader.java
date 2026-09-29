@@ -2,10 +2,8 @@ package org.fish.Renderer.Text;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.platform.TextureUtil;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.font.providers.FreeTypeUtil;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import org.fish.FishPlusPlusV2;
@@ -14,20 +12,18 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.util.freetype.FT_Face;
 import org.lwjgl.util.freetype.FT_GlyphSlot;
 import org.lwjgl.util.freetype.FreeType;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.fish.FishPlusPlusV2.mc;
 
 public class FontLoader {
 
     public static HashMap<String, Font> fonts = new HashMap<>();
+    public static Font activeFont = null;
 
     public static void LoadFont(String fontPath, String fontName) {
         if (fonts.containsKey(fontName))
@@ -105,8 +101,8 @@ public class FontLoader {
         DynamicTexture dynamicTexture = new DynamicTexture(() -> "FishPlusPlus Font Texture", nativeImage);
         Font font = new Font(characters, dynamicTexture, 12, w, h);
 
-        if (FontRenderer.activeFont == null)
-            FontRenderer.activeFont = font;
+        if (activeFont == null)
+            activeFont = font;
         fonts.put(fontName, font);
     }
 }

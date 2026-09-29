@@ -13,7 +13,6 @@ import net.minecraft.world.phys.Vec2;
 import org.fish.Events.EventRender2D;
 import org.fish.Events.EventRender3D;
 import org.fish.Renderer.RenderPipelines;
-import org.fish.Renderer.Renderer;
 import org.fish.Utils.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

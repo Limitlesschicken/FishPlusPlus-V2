@@ -8,18 +8,11 @@ import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.renderpearl.api.pipeline.CompiledRenderPipeline;
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import net.minecraft.client.Camera;
-import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
-import org.fish.FishPlusPlusV2;
-import org.fish.Renderer.Text.Character;
-import org.fish.Renderer.Text.Font;
 import org.fish.Renderer.Text.FontLoader;
 import org.joml.*;
 
-import java.awt.*;
 import java.util.Optional;
 import java.util.function.Consumer;
 

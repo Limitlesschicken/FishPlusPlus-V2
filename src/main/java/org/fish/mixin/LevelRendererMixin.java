@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.fish.Events.EventRender3D;
-import org.fish.Renderer.Renderer;
 import org.fish.Renderer.WorldRenderSystem;
 import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
