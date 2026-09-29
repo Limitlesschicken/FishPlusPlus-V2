@@ -2,6 +2,8 @@ package org.fish.Renderer.Text;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.platform.TextureUtil;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.gui.font.providers.FreeTypeUtil;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.Mth;
@@ -23,13 +25,31 @@ import static org.fish.FishPlusPlusV2.mc;
 public class FontLoader {
 
     public static HashMap<String, Font> fonts = new HashMap<>();
-    public static Font activeFont = null;
 
-    public static void LoadFont(String fontPath, String fontName) {
+    public static void SetActiveFont(String font) {
+        Font gotFont = fonts.get(font);
+        if (gotFont == null) {
+            FishPlusPlusV2.LOGGER.warn("Attempting to set font {}. Font does not exist", font);
+            return;
+        }
+        activeFont = fonts.get(font);
+    }
+
+    public static void SetActiveFont(Font font) {
+        activeFont = font;
+    }
+
+    @Setter
+    @Getter
+    private static Font activeFont = null;
+
+    public static void LoadFont(String fontPath, String fontName, int fontSize) {
         if (fonts.containsKey(fontName))
             return;
         FT_Face face;
         ByteBuffer fontData;
+
+        FishPlusPlusV2.LOGGER.info("Loading font: {}", fontName);
 
         try {
             InputStream resource = mc.getResourceManager().open(FishPlusPlusV2.id(fontPath));
@@ -41,7 +61,7 @@ public class FontLoader {
 
             FreeType.FT_New_Memory_Face(FreeTypeUtil.getLibrary(), fontData, 0, faceBuffer);
             face = FT_Face.create(faceBuffer.get());
-            FreeType.FT_Set_Pixel_Sizes(face, 0 , 24);
+            FreeType.FT_Set_Pixel_Sizes(face, 0 , fontSize);
             stack.pop();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -99,7 +119,7 @@ public class FontLoader {
 
         FreeType.FT_Done_Face(face);
         DynamicTexture dynamicTexture = new DynamicTexture(() -> "FishPlusPlus Font Texture", nativeImage);
-        Font font = new Font(characters, dynamicTexture, 12, w, h);
+        Font font = new Font(characters, dynamicTexture, fontSize, w, h);
 
         if (activeFont == null)
             activeFont = font;

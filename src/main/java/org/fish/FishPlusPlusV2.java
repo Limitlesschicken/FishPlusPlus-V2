@@ -49,19 +49,13 @@ public class FishPlusPlusV2 implements ClientModInitializer {
 
 	@EventHandler
 	public void onRender3D(EventRender3D event) {
-
 		for (Entity entity : EntityUtils.GetEntites()) {
 			if (entity == mc.player)
 				continue;
 
 			event.renderer.Box(entity, event.tickDelta, new Color(255, 100, 100, 50), new Color(255, 100, 100, 255));
 		}
-
-
-		//event.renderer.Box(new Vec3(0, 0, 0), new Vec3(1, 1, 1), new Color(255, 100, 100, 50), new Color(255, 100, 100, 255));
 	}
-
-
 
 	public static Identifier id(String path) {
 		return Identifier.fromNamespaceAndPath(MOD_ID, path);

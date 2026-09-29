@@ -24,7 +24,7 @@ public class Renderer {
     @Getter
     private static boolean initialized = false;
     public static void Init() {
-        FontLoader.LoadFont("fonts/figtree.ttf", "Figtree");
+        FontLoader.LoadFont("fonts/figtree.ttf", "Figtree", 24);
         initialized = true;
     }
 
