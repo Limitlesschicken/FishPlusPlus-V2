@@ -13,6 +13,7 @@ import net.minecraft.world.phys.Vec2;
 import org.fish.Events.EventRender2D;
 import org.fish.Events.EventRender3D;
 import org.fish.Renderer.RenderPipelines;
+import org.fish.Renderer.Renderer;
 import org.fish.Utils.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,7 @@ public class FishPlusPlusV2 implements ClientModInitializer {
 
 		EVENT_BUS.registerLambdaFactory("org.fish", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
+
 		RenderPipelines.init();
 
 		EVENT_BUS.subscribe(this);
@@ -43,6 +45,7 @@ public class FishPlusPlusV2 implements ClientModInitializer {
 	@EventHandler
 	public void onRender2D(EventRender2D event) {
 		event.node.Quad(new Vec2(200.0f, 200.0f), 100, 100, Color.BLUE);
+		event.node.Text("YESSSS", new Vec2(200.0f, 200.0f), 1, Color.RED);
 	}
 
 	@EventHandler

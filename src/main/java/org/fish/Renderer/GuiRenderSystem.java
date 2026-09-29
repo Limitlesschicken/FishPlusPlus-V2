@@ -1,6 +1,7 @@
 package org.fish.Renderer;
 
 import net.minecraft.world.phys.Vec2;
+import org.fish.Renderer.Text.FontRenderer;
 import org.joml.Matrix4f;
 
 import java.awt.*;
@@ -24,6 +25,10 @@ public class GuiRenderSystem {
     private void RenderNode(GuiRenderSystem.Node node) {
         Renderer.RenderMesh(node.mesh, new Renderer.RenderDescription(RenderPipelines.DefaultPipeline, false, null));
         Renderer.RenderMesh(node.meshLine, new Renderer.RenderDescription(RenderPipelines.LinesPipeline, false, null));
+        Renderer.RenderMesh(node.meshText, new Renderer.RenderDescription(RenderPipelines.TextPipeline, false, pass -> {
+            if (FontRenderer.activeFont != null)
+                pass.setUniform("Sampler0", FontRenderer.activeFont.texture().getTextureView(), FontRenderer.activeFont.texture().getSampler());
+        }));
     }
 
     public Node NextStratum() {
@@ -40,17 +45,21 @@ public class GuiRenderSystem {
     public class Node {
         public QuickMeshBuilder.Mesh mesh = null;
         public QuickMeshBuilder.Mesh meshLine = null;
+        public QuickMeshBuilder.Mesh meshText = null;
 
         boolean building = false;
         QuickMeshBuilder.Render2D meshBuilder;
         QuickMeshBuilder.Render2D meshBuilderLine;
+        QuickMeshBuilder.Render2D meshBuilderText;
 
         protected void Begin() {
             building = true;
             meshBuilder = new QuickMeshBuilder.Render2D();
             meshBuilderLine = new QuickMeshBuilder.Render2D();
+            meshBuilderText = new QuickMeshBuilder.Render2D();
             meshBuilder.BeginBuilding(false, false);
             meshBuilderLine.BeginBuilding(true, false);
+            meshBuilderText.BeginBuilding(false, true);
         }
 
         protected void End() {
@@ -59,6 +68,7 @@ public class GuiRenderSystem {
             building = false;
             mesh = meshBuilder.EndBuilding();
             meshLine = meshBuilderLine.EndBuilding();
+            meshText = meshBuilderText.EndBuilding();
         }
 
         public void Quad(Vec2 a1, int width, int height, Color color) {
@@ -66,6 +76,10 @@ public class GuiRenderSystem {
         }
         public void Line(Vec2 a1, Vec2 a2, Color color) {
             meshBuilderLine.Line(a1, a2, color);
+        }
+        public void Text(String text, Vec2 pos, float size, Color color) {
+            if (FontRenderer.activeFont != null)
+                meshBuilderText.Text(text, pos, size, color, FontRenderer.activeFont);
         }
     }
 

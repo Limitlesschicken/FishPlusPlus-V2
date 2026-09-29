@@ -5,6 +5,7 @@
   "mixins": [
     "GameRendererMixin",
     "LevelRendererMixin",
+    "MinecraftMixin",
     "accessor.ILevelMixin"
   ],
   "injectors": {

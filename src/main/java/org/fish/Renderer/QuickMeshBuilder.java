@@ -13,6 +13,8 @@ import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import org.fish.Renderer.Text.Character;
+import org.fish.Renderer.Text.Font;
 
 import java.awt.*;
 
@@ -138,6 +140,44 @@ public abstract class QuickMeshBuilder {
     public static class Render2D extends QuickMeshBuilder {
         public void Rect(Vec2 p1, int width, int height, Color color) {
             quad(new Vec3(p1.x, p1.y, -1.0f), new Vec3(p1.x + width, p1.y, -1.0f), new Vec3(p1.x, p1.y + height, -1.0f), new Vec3(p1.x + width, p1.y + height, -1.0f), color);
+        }
+
+        public void Text(String text, Vec2 pos, float scale, Color color, Font font) {
+            if (font == null)
+                return;
+            float x = pos.x;
+            for (char c : text.toCharArray()) {
+
+                Character ch = font.characters().get(c);
+
+                float w = ch.size().x * scale;
+                float h = ch.size().y * scale;
+
+                float baseline = pos.y + ch.Ascender() * scale;
+
+                float xPos = x + ch.bearing().x * scale;
+                float yPos = (baseline - ch.bearing().y * scale);
+
+                x += ch.Advance() * scale;
+
+                float u0 = ch.tx();
+                float u1 = ch.tx() + ch.size().x / (float) font.atlasWidth();
+
+                float v0 = 0.0f;
+                float v1 = ch.size().y / (float) font.atlasHeight();
+
+                quadUV(
+                        new Vec3(xPos, yPos, -1.0f),
+                        new Vec3(xPos + w, yPos, -1.0f),
+                        new Vec3(xPos, yPos + h, -1.0f),
+                        new Vec3(xPos + w, yPos + h, -1.0f),
+                        new Vec2(u1, v0),
+                        new Vec2(u0, v0),
+                        new Vec2(u0, v1),
+                        new Vec2(u1, v1),
+                        color
+                );
+            }
         }
 
         public void Line(Vec2 p1, Vec2 p2, Color color) {

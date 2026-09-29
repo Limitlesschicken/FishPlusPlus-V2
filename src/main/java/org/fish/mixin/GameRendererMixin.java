@@ -2,10 +2,14 @@ package org.fish.mixin;
 
 import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.FirstPersonHandsAndItemsRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.Projection;
 import net.minecraft.client.renderer.ProjectionMatrixBuffer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.state.GameRenderState;
+import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.fish.Events.EventRender2D;
@@ -33,6 +37,9 @@ public class GameRendererMixin {
 
     @Inject(method = "render", at = @At("TAIL"))
     public void render(CallbackInfo ci) {
+        if (!Renderer.initialized)
+            return;
+
         ProfilerFiller profiler = Profiler.get();
         profiler.push("FishPlusPlus 2D Render");
 
@@ -50,7 +57,6 @@ public class GameRendererMixin {
         profiler.popPush("Render");
 
         guiRenderer.Render();
-        Renderer.TextRenderer();
 
         profiler.pop();
 

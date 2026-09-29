@@ -19,6 +19,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +27,16 @@ import static org.fish.FishPlusPlusV2.mc;
 
 public class FontLoader {
 
-    static public Font LoadFont() {
+    public static HashMap<String, Font> fonts = new HashMap<>();
+
+    public static void LoadFont(String fontPath, String fontName) {
+        if (fonts.containsKey(fontName))
+            return;
         FT_Face face;
         ByteBuffer fontData;
 
         try {
-            InputStream resource = mc.getResourceManager().open(FishPlusPlusV2.id("fonts/figtree.ttf"));
+            InputStream resource = mc.getResourceManager().open(FishPlusPlusV2.id(fontPath));
             fontData = TextureUtil.readResource(resource);
 
             MemoryStack stack = MemoryStack.stackPush();
@@ -98,6 +103,10 @@ public class FontLoader {
 
         FreeType.FT_Done_Face(face);
         DynamicTexture dynamicTexture = new DynamicTexture(() -> "FishPlusPlus Font Texture", nativeImage);
-        return new Font(characters, dynamicTexture, 12, w, h);
+        Font font = new Font(characters, dynamicTexture, 12, w, h);
+
+        if (FontRenderer.activeFont == null)
+            FontRenderer.activeFont = font;
+        fonts.put(fontName, font);
     }
 }
