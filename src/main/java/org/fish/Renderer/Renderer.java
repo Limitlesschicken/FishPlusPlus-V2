@@ -1,7 +1,9 @@
 package org.fish.Renderer;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.renderpearl.api.GpuFormat;
 import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import com.mojang.renderpearl.api.commands.CommandEncoder;
 import com.mojang.renderpearl.api.commands.RenderPass;
@@ -24,7 +26,9 @@ public class Renderer {
     @Getter
     private static boolean initialized = false;
     public static void Init() {
+        FontLoader.LoadFont("fonts/livvic.ttf", "Livvic", 24);
         FontLoader.LoadFont("fonts/figtree.ttf", "Figtree", 24);
+
         initialized = true;
     }
 
@@ -82,4 +86,12 @@ public class Renderer {
     }
 
     public record RenderDescription(RenderPipeline pipeline, boolean render3D, Consumer<RenderPass> uniforms) { }
+
+    RenderTarget customTarget;
+
+    void PostRender() {
+        customTarget = new TextureTarget("Fish++ renderTarget", mc.getWindow().getWidth(), mc.getWindow().getHeight(), GpuFormat.RGBA8_UNORM, null);
+
+
+    }
 }

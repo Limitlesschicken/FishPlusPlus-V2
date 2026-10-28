@@ -39,7 +39,6 @@ public class FontLoader {
         activeFont = font;
     }
 
-    @Setter
     @Getter
     private static Font activeFont = null;
 
