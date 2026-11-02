@@ -1,5 +1,7 @@
 package org.fish.Gui;
 
+import com.ibm.icu.impl.StaticUnicodeSets;
+import com.mojang.blaze3d.platform.InputConstants;
 import lombok.Getter;
 import lombok.Setter;
 import meteordevelopment.orbit.EventHandler;
@@ -13,9 +15,7 @@ import java.util.ArrayList;
 import static org.fish.FishPlusPlusV2.mc;
 
 public class Gui {
-    private ArrayList<Tab> tabs = new ArrayList<>();
-
-    private Region mainRegion;
+    private final Region mainRegion;
 
     @Getter
     @Setter
@@ -24,7 +24,10 @@ public class Gui {
     public Gui() {
         FishPlusPlusV2.EVENT_BUS.subscribe(this);
 
-        mainRegion = new Region(0, 0, mc.getWindow().getWidth(), mc.getWindow().getHeight());
+        //region that just has everything under it like tabs (maybe some other stuff if i add it)
+        //but probably not hud stuff
+        //Nothing visual about it so the size and position does not matter
+        mainRegion = new Region(0, 0, 0, 0);
 
         for (Tabs tabEnum : Tabs.values()) {
             Tab tab = new Tab(225 * (tabEnum.ordinal() + 1), 100, tabEnum.name());
@@ -43,7 +46,7 @@ public class Gui {
 
     @EventHandler
     public void onKey(EventKey event) {
-        if (event.in())
+        if (event.in() && event.key().getValue() == InputConstants.KEY_RSHIFT)
             Gui.setOpen(!Gui.isOpen());
     }
 

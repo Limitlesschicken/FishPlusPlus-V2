@@ -13,6 +13,7 @@ import net.minecraft.world.phys.Vec2;
 import org.fish.Events.EventKey;
 import org.fish.Events.EventRender2D;
 import org.fish.Events.EventRender3D;
+import org.fish.Feature.FeatureHandler;
 import org.fish.Gui.Gui;
 import org.fish.Renderer.RenderPipelines;
 import org.fish.Utils.EntityUtils;
@@ -32,6 +33,7 @@ public class FishPlusPlusV2 implements ClientModInitializer {
 	public static Minecraft mc;
 
 	public static Gui GUI;
+	public static FeatureHandler FEATURE_HANDLER;
 
 	public static IEventBus EVENT_BUS = new EventBus();
 
