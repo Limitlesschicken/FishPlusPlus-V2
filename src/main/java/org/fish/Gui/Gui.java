@@ -7,6 +7,7 @@ import lombok.Setter;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.KeyMapping;
 import org.fish.Events.EventKey;
+import org.fish.Events.EventMouseClick;
 import org.fish.Events.EventMouseMove;
 import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
@@ -83,5 +84,10 @@ public class Gui {
     @EventHandler
     public void onMouseMove(EventMouseMove event) {
         mainRegion.OnMouseHover(event.xpos(), event.ypos());
+    }
+
+    @EventHandler
+    public void onMouseClick(EventMouseClick event) {
+        mainRegion.OnMouseClick(mc.mouseHandler.xpos(), mc.mouseHandler.ypos(), event.button(), event.in());
     }
 }

@@ -48,4 +48,8 @@ public class Region {
         hovered = Bounds(mouseX, mouseY);
         this.children.forEach(region -> {region.OnMouseHover(mouseX, mouseY);});
     }
+
+    public void OnMouseClick(double mouseX, double mouseY, int button, boolean in) {
+        this.children.forEach(region -> {region.OnMouseClick(mouseX, mouseY, button, in);});
+    }
 }

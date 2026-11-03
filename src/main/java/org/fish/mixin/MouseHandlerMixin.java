@@ -2,6 +2,7 @@ package org.fish.mixin;
 
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.input.MouseButtonInfo;
+import org.fish.Events.EventMouseClick;
 import org.fish.Events.EventMouseMove;
 import org.fish.FishPlusPlusV2;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +22,8 @@ public class MouseHandlerMixin {
 
     @Inject(method = "onButton", at = @At("HEAD"), cancellable = true)
     public void onButton(final long handle, final MouseButtonInfo rawButtonInfo, final @MouseButtonInfo.Action int action, CallbackInfo ci) {
+        FishPlusPlusV2.EVENT_BUS.post(new EventMouseClick(rawButtonInfo.input(), action == 1));
+
         //make sure mouse doesent interact with game while clickgui is open
         if (FishPlusPlusV2.GUI.isOpen())
             ci.cancel();
