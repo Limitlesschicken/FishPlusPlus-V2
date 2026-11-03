@@ -17,6 +17,6 @@ public class Flight extends Feature {
         if (mc.player == null)
             return;
 
-        mc.player.setPos(mc.player.position().x, 200, mc.player.position().z);
+        mc.player.setPos(mc.player.position().x, 100, mc.player.position().z);
     }
 }

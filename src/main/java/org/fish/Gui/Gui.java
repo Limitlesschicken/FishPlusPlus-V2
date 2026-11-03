@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import lombok.Getter;
 import lombok.Setter;
 import meteordevelopment.orbit.EventHandler;
+import net.minecraft.client.KeyMapping;
 import org.fish.Events.EventKey;
 import org.fish.Events.EventMouseMove;
 import org.fish.FishPlusPlusV2;
@@ -12,6 +13,7 @@ import org.fish.Renderer.GuiRenderSystem;
 
 import java.util.ArrayList;
 
+import static org.fish.FishPlusPlusV2.GUI;
 import static org.fish.FishPlusPlusV2.mc;
 
 public class Gui {
@@ -19,7 +21,7 @@ public class Gui {
 
     @Getter
     @Setter
-    private static boolean open = false;
+    private boolean open = false;
 
     public Gui() {
         FishPlusPlusV2.EVENT_BUS.subscribe(this);
@@ -46,8 +48,36 @@ public class Gui {
 
     @EventHandler
     public void onKey(EventKey event) {
-        if (event.in() && event.key().getValue() == InputConstants.KEY_RSHIFT)
-            Gui.setOpen(!Gui.isOpen());
+        if (!event.isIn())
+            return;
+
+        boolean closed = false;
+
+        //esc always closes clickGui but never opens it
+        if (event.getKey().getValue() == InputConstants.KEY_ESCAPE && GUI.isOpen()) {
+            this.setOpen(false);
+            event.setCancelled(true);
+            closed = true;
+        }
+
+        if (event.getKey().getValue() == InputConstants.KEY_RSHIFT) {
+            closed = this.isOpen();
+            this.setOpen(!this.isOpen());
+            event.setCancelled(true);
+
+        }
+
+        if (event.isCancelled()) {
+            if (closed && mc.gui.screen() == null)
+                mc.mouseHandler.grabMouse();
+            else {
+                KeyMapping.releaseAll();
+                mc.mouseHandler.releaseMouse();
+            }
+        }
+
+        if (GUI.isOpen())
+            event.setCancelled(true);
     }
 
     @EventHandler

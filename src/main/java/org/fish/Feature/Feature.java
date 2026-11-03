@@ -7,15 +7,11 @@ public class Feature {
     public String name;
     public Tabs tab;
 
-    boolean active = true;
+    boolean active = false;
 
     public Feature(String name, Tabs tab) {
         this.name = name;
         this.tab = tab;
-
-        if (active) {
-            FishPlusPlusV2.EVENT_BUS.subscribe(this);
-        }
     }
 
     public void Toggle() {
