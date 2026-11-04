@@ -9,7 +9,7 @@ import static org.fish.FishPlusPlusV2.mc;
 
 public class Flight extends Feature {
     public Flight() {
-        super("Flight", Tabs.Test);
+        super("Flight", Tabs.Movement);
     }
 
     @EventHandler

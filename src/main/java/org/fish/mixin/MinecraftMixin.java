@@ -19,8 +19,9 @@ public class MinecraftMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
     public void InitMinecraft(CallbackInfo ci) {
         Renderer.Init();
-        GUI = new Gui();
         FEATURE_HANDLER = new FeatureHandler();
+        GUI = new Gui();
+
     }
 
     @Inject(method = "tick", at = @At("TAIL"))

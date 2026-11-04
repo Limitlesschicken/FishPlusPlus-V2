@@ -8,27 +8,16 @@ import java.awt.*;
 public class Tab extends Region {
     private String name;
 
-    Color color = Color.GREEN;
-    boolean changedColor = false;
-
     Tab(float x, float y, String name) {
-        super(x, y, 125, 50);
+        super(x, y, 200, 30);
         this.name = name;
     }
 
     @Override
     public void Render(GuiRenderSystem.Node node) {
-        if (hovered && !changedColor) {
-            color = Color.BLUE;
-            changedColor = true;
-        }
-        node.Quad(new Vec2(x, y), (int) width, (int) height, color);
+        node.Quad(new Vec2(x, y), (int) width, (int) height, new Color(50, 50, 50, 255));
         node.Text(name, new Vec2(x, y), 1, Color.WHITE);
-    }
 
-    @Override
-    public void OnMouseClick(double mouseX, double mouseY, int button, boolean in) {
-        if (Bounds(mouseX, mouseY))
-            color = Color.RED;
+        super.Render(node);
     }
 }

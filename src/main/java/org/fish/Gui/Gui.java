@@ -9,13 +9,14 @@ import net.minecraft.client.KeyMapping;
 import org.fish.Events.EventKey;
 import org.fish.Events.EventMouseClick;
 import org.fish.Events.EventMouseMove;
+import org.fish.Feature.Feature;
+import org.fish.Feature.FeatureHandler;
 import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
 
 import java.util.ArrayList;
 
-import static org.fish.FishPlusPlusV2.GUI;
-import static org.fish.FishPlusPlusV2.mc;
+import static org.fish.FishPlusPlusV2.*;
 
 public class Gui {
     private final Region mainRegion;
@@ -34,6 +35,17 @@ public class Gui {
 
         for (Tabs tabEnum : Tabs.values()) {
             Tab tab = new Tab(225 * (tabEnum.ordinal() + 1), 100, tabEnum.name());
+            int i = 1;
+            for (Feature feature : FeatureHandler.features) {
+                if (!tabEnum.equals(feature.tab))
+                    continue;
+
+
+                FeatureButton featureButton = new FeatureButton(tab.x, tab.y + 30 * i, feature.name, feature);
+                tab.Add(featureButton);
+
+                i++;
+            }
             mainRegion.Add(tab);
         }
     }
