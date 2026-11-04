@@ -21,6 +21,8 @@ public class FeatureButton extends Region{
         Color color = new Color(60, 60, 60, 255);
         if (hovered)
             color = new Color(70, 70, 70, 255);
+        if (feature.isActive())
+            color = new Color(255, 100, 100, 255);
         node.Quad(new Vec2(x, y), (int) width, (int) height, color);
         node.Text(name, new Vec2(x, y), 1.0f, Color.WHITE);
     }

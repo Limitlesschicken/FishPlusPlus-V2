@@ -1,5 +1,6 @@
 package org.fish.Feature;
 
+import lombok.Getter;
 import org.fish.FishPlusPlusV2;
 import org.fish.Gui.Tabs;
 
@@ -7,7 +8,8 @@ public class Feature {
     public String name;
     public Tabs tab;
 
-    boolean active = false;
+    @Getter
+    private boolean active = false;
 
     public Feature(String name, Tabs tab) {
         this.name = name;
