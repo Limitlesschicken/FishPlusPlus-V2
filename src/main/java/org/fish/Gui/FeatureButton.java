@@ -2,7 +2,6 @@ package org.fish.Gui;
 
 import net.minecraft.world.phys.Vec2;
 import org.fish.Feature.Feature;
-import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
 
 import java.awt.*;
@@ -23,8 +22,8 @@ public class FeatureButton extends Region{
             color = new Color(70, 70, 70, 255);
         if (feature.isActive())
             color = new Color(255, 100, 100, 255);
-        node.Quad(new Vec2(x, y), (int) width, (int) height, color);
-        node.Text(name, new Vec2(x, y), 1.0f, Color.WHITE);
+        node.Quad(new Vec2(absoluteX, absoluteY), (int) width, (int) height, color);
+        node.Text(name, new Vec2(absoluteX, absoluteY), 1.0f, Color.WHITE);
     }
 
     @Override

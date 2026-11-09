@@ -1,6 +1,5 @@
 package org.fish.Gui;
 
-import com.ibm.icu.impl.StaticUnicodeSets;
 import com.mojang.blaze3d.platform.InputConstants;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +12,6 @@ import org.fish.Feature.Feature;
 import org.fish.Feature.FeatureHandler;
 import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
-
-import java.util.ArrayList;
 
 import static org.fish.FishPlusPlusV2.*;
 
@@ -40,13 +37,18 @@ public class Gui {
                 if (!tabEnum.equals(feature.tab))
                     continue;
 
-                FeatureButton featureButton = new FeatureButton(tab.x, tab.y + 30 * i, feature.name, feature);
+                FeatureButton featureButton = new FeatureButton(0, 30 * i, feature.name, feature);
                 tab.Add(featureButton);
 
                 i++;
             }
             mainRegion.Add(tab);
         }
+    }
+
+    //Runs even when gui is closed
+    public void Update() {
+        mainRegion.Update();
     }
 
     public void Render(GuiRenderSystem renderSystem) {

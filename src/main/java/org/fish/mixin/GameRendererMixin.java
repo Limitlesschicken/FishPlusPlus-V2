@@ -51,6 +51,7 @@ public class GameRendererMixin {
         //First node is reserved for module 2d rendering
         EVENT_BUS.post(new EventRender2D(backGround, mc.getDeltaTracker().getGameTimeDeltaPartialTick(false)));
 
+        FishPlusPlusV2.GUI.Update();
         FishPlusPlusV2.GUI.Render(guiRenderer);
 
         profiler.popPush("Render");
