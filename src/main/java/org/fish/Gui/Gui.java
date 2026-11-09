@@ -40,7 +40,6 @@ public class Gui {
                 if (!tabEnum.equals(feature.tab))
                     continue;
 
-
                 FeatureButton featureButton = new FeatureButton(tab.x, tab.y + 30 * i, feature.name, feature);
                 tab.Add(featureButton);
 
@@ -54,8 +53,10 @@ public class Gui {
         if (!open)
             return;
 
-        GuiRenderSystem.Node node = renderSystem.NextStratum();
-        mainRegion.Render(node);
+        for (Region childRegions : mainRegion.children) {
+            GuiRenderSystem.Node node = renderSystem.NextStratum();
+            childRegions.Render(node);
+        }
 
     }
 
