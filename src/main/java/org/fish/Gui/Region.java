@@ -30,15 +30,6 @@ public class Region {
         this.height = height;
     }
 
-    public Region() {
-        this.absoluteX = 0;
-        this.absoluteY = 0;
-        this.x = 0;
-        this.y = 0;
-        this.width = 0;
-        this.height = 0;
-    }
-
     void Add(Region child) {
         if (child.parent != null)
             child.parent.Remove(child);

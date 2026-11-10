@@ -5,7 +5,7 @@ import org.fish.Feature.Settings.ToggleSetting;
 import org.fish.Gui.SettingButton;
 
 public class ToggleButton extends SettingButton {
-    public ToggleButton(Setting<Boolean> setting) {
-        super(setting);
+    public ToggleButton(float x, float y, Setting<Boolean> setting) {
+        super(x, y, setting);
     }
 }

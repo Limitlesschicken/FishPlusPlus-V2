@@ -9,7 +9,7 @@ public class ToggleSetting extends Setting<Boolean> {
         super(name, defaultValue);
     }
 
-    public ToggleButton CreateButton() {
-        return new ToggleButton(this);
+    public ToggleButton CreateButton(float x, float y) {
+        return new ToggleButton(x, y, this);
     }
 }

@@ -21,5 +21,5 @@ public abstract class Setting<T> {
         this.name = name;
     }
 
-   public abstract ToggleButton CreateButton();
+   public abstract ToggleButton CreateButton(float x, float y);
 }

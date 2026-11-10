@@ -17,8 +17,7 @@ public class FeatureButton extends Region{
         this.feature = feature;
 
         for (Setting<?> setting : feature.getSettings()) {
-            FishPlusPlusV2.LOGGER.info("Setting: {}", setting.getName());
-            this.Add(setting.CreateButton());
+            this.Add(setting.CreateButton(this.x, this.y + 30));
         }
     }
 
