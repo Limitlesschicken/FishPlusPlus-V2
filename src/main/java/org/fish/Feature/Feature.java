@@ -4,9 +4,15 @@ import lombok.Getter;
 import org.fish.FishPlusPlusV2;
 import org.fish.Gui.Tabs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Feature {
     public String name;
     public Tabs tab;
+
+    @Getter
+    private List<Setting<?>> settings = new ArrayList<>();
 
     @Getter
     private boolean active = false;
@@ -23,5 +29,9 @@ public class Feature {
         } else {
             FishPlusPlusV2.EVENT_BUS.unsubscribe(this);
         }
+    }
+
+    public void AddSetting(Setting<?> setting) {
+        settings.add(setting);
     }
 }

@@ -4,6 +4,7 @@ import meteordevelopment.orbit.EventHandler;
 import net.minecraft.world.entity.Entity;
 import org.fish.Events.EventRender3D;
 import org.fish.Feature.Feature;
+import org.fish.Feature.Settings.ToggleSetting;
 import org.fish.Gui.Tabs;
 import org.fish.Utils.EntityUtils;
 
@@ -12,8 +13,10 @@ import java.awt.*;
 import static org.fish.FishPlusPlusV2.mc;
 
 public class ESP extends Feature {
+    ToggleSetting testSetting = new ToggleSetting("Test", true);
     public ESP() {
         super("ESP", Tabs.Visual);
+        this.AddSetting(testSetting);
     }
 
     @EventHandler

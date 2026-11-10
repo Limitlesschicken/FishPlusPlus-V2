@@ -2,6 +2,8 @@ package org.fish.Gui;
 
 import net.minecraft.world.phys.Vec2;
 import org.fish.Feature.Feature;
+import org.fish.Feature.Setting;
+import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
 
 import java.awt.*;
@@ -13,6 +15,11 @@ public class FeatureButton extends Region{
         super(x, y, 200, 30);
         this.name = name;
         this.feature = feature;
+
+        for (Setting<?> setting : feature.getSettings()) {
+            FishPlusPlusV2.LOGGER.info("Setting: {}", setting.getName());
+            this.Add(setting.CreateButton());
+        }
     }
 
     @Override

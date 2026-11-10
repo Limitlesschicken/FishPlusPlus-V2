@@ -21,13 +21,22 @@ public class Region {
 
     boolean hovered = false;
 
-    Region(float x, float y, float width, float height) {
+    public Region(float x, float y, float width, float height) {
         this.absoluteX = x;
         this.absoluteY = y;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+    public Region() {
+        this.absoluteX = 0;
+        this.absoluteY = 0;
+        this.x = 0;
+        this.y = 0;
+        this.width = 0;
+        this.height = 0;
     }
 
     void Add(Region child) {
