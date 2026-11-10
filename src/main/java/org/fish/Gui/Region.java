@@ -16,8 +16,8 @@ public class Region {
     float x;
     float y;
 
-    float width;
-    float height;
+    protected float width;
+    protected float height;
 
     boolean hovered = false;
 

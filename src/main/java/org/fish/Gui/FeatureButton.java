@@ -17,7 +17,7 @@ public class FeatureButton extends Region{
         this.feature = feature;
 
         for (Setting<?> setting : feature.getSettings()) {
-            this.Add(setting.CreateButton(this.x, this.y + 30));
+            this.Add(setting.CreateButton(width, 0));
         }
     }
 
@@ -30,6 +30,7 @@ public class FeatureButton extends Region{
             color = new Color(255, 100, 100, 255);
         node.Quad(new Vec2(absoluteX, absoluteY), (int) width, (int) height, color);
         node.Text(name, new Vec2(absoluteX, absoluteY), 1.0f, Color.WHITE);
+        super.Render(node);
     }
 
     @Override
@@ -37,6 +38,8 @@ public class FeatureButton extends Region{
         if (Bounds(mouseX, mouseY) && in) {
             feature.Toggle();
         }
+
+        super.OnMouseClick(mouseX, mouseY, button, in);
     }
 
 }

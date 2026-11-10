@@ -13,7 +13,7 @@ import java.awt.*;
 import static org.fish.FishPlusPlusV2.mc;
 
 public class ESP extends Feature {
-    ToggleSetting testSetting = new ToggleSetting("Test", true);
+    ToggleSetting testSetting = new ToggleSetting("Test Setting", true);
     public ESP() {
         super("ESP", Tabs.Visual);
         this.AddSetting(testSetting);
