@@ -15,7 +15,7 @@ import static org.fish.FishPlusPlusV2.mc;
 
 public class Flight extends Feature {
     public Flight() {
-        super("Flight", Tabs.Movement);
+        super("Flight", Tabs.Visual);
     }
 
     @EventHandler

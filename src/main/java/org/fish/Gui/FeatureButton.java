@@ -37,12 +37,12 @@ public class FeatureButton extends Region{
 
     @Override
     public void Update() {
-        if (openSettings) {
+        settingsBody.height = 0;
+        if (openSettings)
             settingsBody.height = settingsBody.children.size() * this.height;
-        }
 
         bodyHeight = this.height + settingsBody.height;
-        FishPlusPlusV2.LOGGER.info("FeatureQ: {} Height: {}", name, bodyHeight);
+
         super.Update();
     }
 
@@ -56,15 +56,20 @@ public class FeatureButton extends Region{
         node.Quad(new Vec2(absoluteX, absoluteY), (int) width, (int) height, color);
         node.Text(name, new Vec2(absoluteX, absoluteY), 1.0f, Color.WHITE);
 
-        super.Render(node);
+        if (this.openSettings)
+            super.Render(node);
     }
 
     @Override
     public void OnMouseClick(double mouseX, double mouseY, int button, boolean in) {
         if (Bounds(mouseX, mouseY) && in) {
-            feature.Toggle();
+            FishPlusPlusV2.LOGGER.info("{}", this.openSettings);
+            if (button == 1)
+                feature.Toggle();
+            else if (button == 3)
+                this.openSettings = !this.openSettings;
         }
-        
+
         super.OnMouseClick(mouseX, mouseY, button, in);
     }
 

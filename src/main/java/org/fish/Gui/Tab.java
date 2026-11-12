@@ -46,8 +46,9 @@ public class Tab extends Region {
 
     @Override
     public void Update() {
-        SetFeaturePositions();
         super.Update();
+
+        SetFeaturePositions();
     }
 
     @Override

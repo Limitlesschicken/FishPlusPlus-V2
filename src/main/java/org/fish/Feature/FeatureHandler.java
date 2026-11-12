@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class FeatureHandler {
     public static ArrayList<Feature> features = new ArrayList<>();
     public FeatureHandler() {
-        features.add(new Flight());
+
         features.add(new ESP());
+        features.add(new Flight());
     }
 }
