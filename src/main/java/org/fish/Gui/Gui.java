@@ -32,16 +32,7 @@ public class Gui {
 
         for (Tabs tabEnum : Tabs.values()) {
             Tab tab = new Tab(225 * (tabEnum.ordinal() + 1), 100, tabEnum.name());
-            int i = 1;
-            for (Feature feature : FeatureHandler.features) {
-                if (!tabEnum.equals(feature.tab))
-                    continue;
-
-                FeatureButton featureButton = new FeatureButton(0, 30 * i, feature.name, feature);
-                tab.Add(featureButton);
-
-                i++;
-            }
+            tab.AddTabs(tabEnum);
             mainRegion.Add(tab);
         }
     }

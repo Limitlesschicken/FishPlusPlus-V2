@@ -1,5 +1,6 @@
 package org.fish.Gui;
 
+import lombok.Getter;
 import net.minecraft.world.phys.Vec2;
 import org.fish.Feature.Feature;
 import org.fish.Feature.Setting;
@@ -11,14 +12,38 @@ import java.awt.*;
 public class FeatureButton extends Region{
     private final String name;
     private final Feature feature;
+
+    private final Region settingsBody;
+
+    @Getter
+    private float bodyHeight = 0.0f;
+
+    private boolean openSettings = true;
+
     FeatureButton(float x, float y, String name, Feature feature) {
         super(x, y, 200, 30);
         this.name = name;
         this.feature = feature;
+        this.bodyHeight = height;
+
+        settingsBody = new Region(0, 0, width, 0);
+
+        this.Add(settingsBody);
 
         for (Setting<?> setting : feature.getSettings()) {
-            this.Add(setting.CreateButton(width, 0));
+            this.settingsBody.Add(setting.CreateButton(0, height));
         }
+    }
+
+    @Override
+    public void Update() {
+        if (openSettings) {
+            settingsBody.height = settingsBody.children.size() * this.height;
+        }
+
+        bodyHeight = this.height + settingsBody.height;
+        FishPlusPlusV2.LOGGER.info("FeatureQ: {} Height: {}", name, bodyHeight);
+        super.Update();
     }
 
     @Override
@@ -30,6 +55,7 @@ public class FeatureButton extends Region{
             color = new Color(255, 100, 100, 255);
         node.Quad(new Vec2(absoluteX, absoluteY), (int) width, (int) height, color);
         node.Text(name, new Vec2(absoluteX, absoluteY), 1.0f, Color.WHITE);
+
         super.Render(node);
     }
 
@@ -38,7 +64,7 @@ public class FeatureButton extends Region{
         if (Bounds(mouseX, mouseY) && in) {
             feature.Toggle();
         }
-
+        
         super.OnMouseClick(mouseX, mouseY, button, in);
     }
 
