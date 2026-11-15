@@ -35,12 +35,23 @@ public class Tab extends Region {
     private void SetFeaturePositions() {
         float currentY = this.height;
 
+        /*
+            I wouldent change the absoluteY like this normally but heres why i do it:
+            FeatureButton::Update sets the body height to the correct values upon closing and opening a tab.
+            Region::Update then sets the absoluteY BEFORE the y has changed so it remains the same.
+            Then this function sets the y. The absoluteY which is used for rendering remains the same as it was already updated earlier.
+            this leads to a 1 frame delay in the tab moving down upon closing and opening
+        */
+        float currentAbsoluteY = this.absoluteY + currentY;
+
         for (Region button : this.children) {
             if (!(button instanceof FeatureButton featureButton))
                 continue;
 
             featureButton.y = currentY;
+            featureButton.absoluteY = currentAbsoluteY;
             currentY += featureButton.getBodyHeight();
+            currentAbsoluteY += featureButton.getBodyHeight();
         }
     }
 
