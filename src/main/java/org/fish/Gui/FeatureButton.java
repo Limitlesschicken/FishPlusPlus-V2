@@ -48,13 +48,13 @@ public class FeatureButton extends Region{
 
     @Override
     public void Render(GuiRenderSystem.Node node) {
-        Color color = new Color(60, 60, 60, 255);
+        Color color = StylingOptions.FeatureButtonColor;
         if (hovered)
-            color = new Color(70, 70, 70, 255);
+            color = StylingOptions.FeatureButtonColorHovered;
         if (feature.isActive())
-            color = new Color(255, 100, 100, 255);
+            color = StylingOptions.FeatureButtonColorActive;
         node.Quad(new Vec2(absoluteX, absoluteY), (int) width, (int) height, color);
-        node.Text(name, new Vec2(absoluteX, absoluteY), 1.0f, Color.WHITE);
+        node.Text(name, new Vec2(absoluteX + StylingOptions.XTextSpacing, absoluteY + StylingOptions.YTextSpacing), 1.0f, Color.WHITE);
 
         if (this.openSettings)
             super.Render(node);

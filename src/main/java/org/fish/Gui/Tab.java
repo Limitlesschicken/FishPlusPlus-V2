@@ -65,8 +65,8 @@ public class Tab extends Region {
     @Override
     public void Render(GuiRenderSystem.Node node) {
 
-        node.Quad(new Vec2(absoluteX, absoluteY), (int) width, (int) height, new Color(50, 50, 50, 255));
-        node.Text(name, new Vec2(absoluteX, absoluteY), 1, Color.WHITE);
+        node.Quad(new Vec2(absoluteX, absoluteY), (int) width, (int) height, StylingOptions.TabColor);
+        node.Text(name, new Vec2(absoluteX + StylingOptions.XTextSpacing, absoluteY + StylingOptions.YTextSpacing), 1, Color.WHITE);
 
         super.Render(node);
     }
