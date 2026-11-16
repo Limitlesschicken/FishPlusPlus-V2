@@ -53,6 +53,19 @@ public class Gui {
 
     }
 
+    void SetTabToTop(Tab tab) {
+        for (Region childRegion : mainRegion.children) {
+            if (!(childRegion instanceof Tab tabInstance))
+                continue;
+
+            if (tab != childRegion)
+                continue;
+
+            mainRegion.children.remove(tab);
+            mainRegion.children.add(tab);
+        }
+    }
+
     @EventHandler
     public void onKey(EventKey event) {
         if (!event.isIn())

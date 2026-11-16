@@ -63,7 +63,6 @@ public class FeatureButton extends Region{
     @Override
     public void OnMouseClick(double mouseX, double mouseY, int button, boolean in) {
         if (Bounds(mouseX, mouseY) && in) {
-            FishPlusPlusV2.LOGGER.info("{}", this.openSettings);
             if (button == 1)
                 feature.Toggle();
             else if (button == 3)

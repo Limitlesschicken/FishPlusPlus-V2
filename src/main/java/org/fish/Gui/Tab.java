@@ -3,6 +3,7 @@ package org.fish.Gui;
 import net.minecraft.world.phys.Vec2;
 import org.fish.Feature.Feature;
 import org.fish.Feature.FeatureHandler;
+import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
 
 import java.awt.*;
@@ -87,6 +88,7 @@ public class Tab extends Region {
         if (Bounds(mouseX, mouseY) && in) {
             dragging = true;
             draggingPos = new Vec2((float) (absoluteX - mouseX), (float) (absoluteY - mouseY));
+            FishPlusPlusV2.GUI.SetTabToTop(this);
         }
         if (!in)
             dragging = false;
