@@ -13,6 +13,8 @@ import org.fish.Feature.FeatureHandler;
 import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
 
+import java.util.Iterator;
+
 import static org.fish.FishPlusPlusV2.*;
 
 public class Gui {
@@ -40,6 +42,7 @@ public class Gui {
     //Runs even when gui is closed
     public void Update() {
         mainRegion.Update();
+        SetTabToTop();
     }
 
     public void Render(GuiRenderSystem renderSystem) {
@@ -53,17 +56,23 @@ public class Gui {
 
     }
 
-    void SetTabToTop(Tab tab) {
-        for (Region childRegion : mainRegion.children) {
-            if (!(childRegion instanceof Tab tabInstance))
+    void SetTabToTop() {
+        Tab removedTab = null;
+        for (Iterator<Region> iterator = mainRegion.children.iterator(); iterator.hasNext();) {
+            Region region = iterator.next();
+            if (!(region instanceof Tab tab))
                 continue;
 
-            if (tab != childRegion)
+            if (!tab.moveToFront)
                 continue;
 
-            mainRegion.children.remove(tab);
-            mainRegion.children.add(tab);
+            removedTab = tab;
+            tab.moveToFront = false;
+            iterator.remove();
+            break;
         }
+        if (removedTab != null)
+            mainRegion.children.add(removedTab);
     }
 
     @EventHandler
