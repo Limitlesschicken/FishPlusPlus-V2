@@ -8,8 +8,6 @@ import net.minecraft.client.KeyMapping;
 import org.fish.Events.EventKey;
 import org.fish.Events.EventMouseClick;
 import org.fish.Events.EventMouseMove;
-import org.fish.Feature.Feature;
-import org.fish.Feature.FeatureHandler;
 import org.fish.FishPlusPlusV2;
 import org.fish.Renderer.GuiRenderSystem;
 
@@ -114,7 +112,7 @@ public class Gui {
 
     @EventHandler
     public void onMouseMove(EventMouseMove event) {
-        mainRegion.OnMouseHover(event.xpos(), event.ypos());
+        mainRegion.OnMouseMove(event.xpos(), event.ypos());
     }
 
     @EventHandler

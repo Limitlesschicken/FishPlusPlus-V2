@@ -4,7 +4,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import org.fish.Feature.Setting;
 import org.fish.Feature.Settings.DoubleSetting;
-import org.fish.FishPlusPlusV2;
 import org.fish.Gui.SettingButton;
 import org.fish.Gui.StylingOptions;
 import org.fish.Renderer.GuiRenderSystem;
@@ -45,8 +44,8 @@ public class SliderButton extends SettingButton<Double> {
     }
 
     @Override
-    public void OnMouseHover(double mouseX, double mouseY) {
-        super.OnMouseHover(mouseX, mouseY);
+    public void OnMouseMove(double mouseX, double mouseY) {
+        super.OnMouseMove(mouseX, mouseY);
 
         if (editing)
             CalculateSliderValue(mouseX);

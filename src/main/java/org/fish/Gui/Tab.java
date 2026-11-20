@@ -76,8 +76,8 @@ public class Tab extends Region {
     }
 
     @Override
-    public void OnMouseHover(double mouseX, double mouseY) {
-        super.OnMouseHover(mouseX, mouseY);
+    public void OnMouseMove(double mouseX, double mouseY) {
+        super.OnMouseMove(mouseX, mouseY);
 
         if (dragging) {
             this.x = (float) mouseX + draggingPos.x;

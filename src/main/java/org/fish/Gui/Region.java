@@ -60,9 +60,9 @@ public class Region {
         return mouseX >= absoluteX && mouseX <= absoluteX + width && mouseY >= absoluteY && mouseY <= absoluteY + height;
     }
 
-    public void OnMouseHover(double mouseX, double mouseY) {
+    public void OnMouseMove(double mouseX, double mouseY) {
         hovered = Bounds(mouseX, mouseY);
-        this.children.forEach(region -> {region.OnMouseHover(mouseX, mouseY);});
+        this.children.forEach(region -> {region.OnMouseMove(mouseX, mouseY);});
     }
 
     public void OnMouseClick(double mouseX, double mouseY, int button, boolean in) {
