@@ -26,7 +26,7 @@ public class FeatureButton extends Region{
         this.feature = feature;
         this.bodyHeight = height;
 
-        settingsBody = new Region(0, 0, width, 0);
+        settingsBody = new Region(0, this.height, width, 0);
 
         this.Add(settingsBody);
 
@@ -41,7 +41,16 @@ public class FeatureButton extends Region{
         if (openSettings)
             settingsBody.height = settingsBody.children.size() * this.height;
 
-        bodyHeight = this.height + settingsBody.height;
+        bodyHeight = settingsBody.height;
+
+        //Make settings go under eachother correctly
+        float startY = 0;
+        if (openSettings) {
+            for (Region settingRegion : this.settingsBody.children) {
+                settingRegion.y = startY;
+                startY += settingRegion.height;
+            }
+        }
 
         super.Update();
     }

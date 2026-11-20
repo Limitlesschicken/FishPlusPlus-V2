@@ -54,8 +54,8 @@ public class Tab extends Region {
 
             featureButton.y = currentY;
             featureButton.absoluteY = currentAbsoluteY;
-            currentY += featureButton.getBodyHeight();
-            currentAbsoluteY += featureButton.getBodyHeight();
+            currentY += featureButton.getBodyHeight() + featureButton.height;
+            currentAbsoluteY += featureButton.getBodyHeight() + featureButton.height;
         }
     }
 
