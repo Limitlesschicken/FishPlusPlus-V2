@@ -2,6 +2,7 @@ package org.fish.Feature;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.fish.Gui.SettingButton;
 import org.fish.Gui.Settings.ToggleButton;
 
 public abstract class Setting<T> {
@@ -21,5 +22,5 @@ public abstract class Setting<T> {
         this.name = name;
     }
 
-   public abstract ToggleButton CreateButton(float x, float y);
+   public abstract SettingButton<?> CreateButton(float x, float y);
 }
