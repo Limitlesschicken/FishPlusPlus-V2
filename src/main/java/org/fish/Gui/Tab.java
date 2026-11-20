@@ -14,7 +14,7 @@ public class Tab extends Region {
     private boolean dragging;
     private Vec2 draggingPos;
 
-    //Setting to true moves the tab to the front of the list in Gui
+    //Setting to true moves the tab to the front of the list in Gui. Turns off 1 frame later
     public boolean moveToFront = false;
 
     Tab(float x, float y, String name) {
@@ -87,14 +87,17 @@ public class Tab extends Region {
 
     @Override
     public void OnMouseClick(double mouseX, double mouseY, int button, boolean in) {
-
-        if (Bounds(mouseX, mouseY) && in) {
+        if (Bounds(mouseX, mouseY) && in && !FishPlusPlusV2.GUI.draggingTab) {
             dragging = true;
             draggingPos = new Vec2((float) (absoluteX - mouseX), (float) (absoluteY - mouseY));
             moveToFront = true;
+            FishPlusPlusV2.GUI.draggingTab = true;
         }
-        if (!in)
+        
+        if (!in) {
             dragging = false;
+            FishPlusPlusV2.GUI.draggingTab = false;
+        }
 
         super.OnMouseClick(mouseX, mouseY, button, in);
     }

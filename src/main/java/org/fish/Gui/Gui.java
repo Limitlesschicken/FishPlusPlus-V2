@@ -24,6 +24,9 @@ public class Gui {
     @Setter
     private boolean open = false;
 
+    //Handles only dragging 1 tab when multiple are on top of eachother. Check Tab::OnMouseClick
+    public boolean draggingTab = false;
+
     public Gui() {
         FishPlusPlusV2.EVENT_BUS.subscribe(this);
 

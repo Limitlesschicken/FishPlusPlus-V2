@@ -19,6 +19,6 @@ public class SettingButton extends Region {
     }
 
     protected void WriteButtonBackground(GuiRenderSystem.Node node) {
-        node.Quad(new Vec2(this.absoluteX, this.absoluteY), (int) this.width, (int) this.height, StylingOptions.FeatureButtonColor);
+        node.Quad(new Vec2(this.absoluteX, this.absoluteY), (int) this.width, (int) this.height, StylingOptions.SettingButtonColor);
     }
 }
