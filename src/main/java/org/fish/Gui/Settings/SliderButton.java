@@ -4,7 +4,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import org.fish.Feature.Setting;
 import org.fish.Feature.Settings.DoubleSetting;
-import org.fish.Feature.Settings.ToggleSetting;
 import org.fish.FishPlusPlusV2;
 import org.fish.Gui.SettingButton;
 import org.fish.Gui.StylingOptions;
@@ -40,7 +39,8 @@ public class SliderButton extends SettingButton<Double> {
         double newProgress = sliderMouseCoord / (this.absoluteX + this.width - this.absoluteX);
 
         DoubleSetting doubleSetting = (DoubleSetting) this.setting;
-        double newValue = newProgress * doubleSetting.getMaxValue() - doubleSetting.getMinValue();
+        double newValue = newProgress * (doubleSetting.getMaxValue() - doubleSetting.getMinValue()) + doubleSetting.getMinValue();
+        FishPlusPlusV2.LOGGER.info("progress {}", newProgress);
         newValue = Mth.clamp(newValue, doubleSetting.getMinValue(), doubleSetting.getMaxValue());
         doubleSetting.setValue(newValue);
     }
