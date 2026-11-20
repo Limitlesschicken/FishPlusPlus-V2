@@ -12,4 +12,8 @@ public class ToggleSetting extends Setting<Boolean> {
     public ToggleButton CreateButton(float x, float y) {
         return new ToggleButton(x, y, this);
     }
+
+    public void Toggle() {
+        this.setValue(!getValue());
+    }
 }

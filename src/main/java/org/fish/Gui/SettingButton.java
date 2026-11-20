@@ -7,9 +7,9 @@ import org.fish.Renderer.GuiRenderSystem;
 
 import java.awt.*;
 
-public class SettingButton extends Region {
-    protected Setting<?> setting;
-    protected SettingButton(float x, float y, Setting<?> setting) {
+public class SettingButton<T> extends Region {
+    protected Setting<T> setting;
+    protected SettingButton(float x, float y, Setting<T> setting) {
         super(x, y, 200, 30);
         this.setting = setting;
     }
