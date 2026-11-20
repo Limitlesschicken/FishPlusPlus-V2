@@ -7,6 +7,7 @@ import net.minecraft.world.phys.Vec3;
 import org.fish.Events.EventMove;
 import org.fish.Events.EventTick;
 import org.fish.Feature.Feature;
+import org.fish.Feature.Settings.DoubleSetting;
 import org.fish.FishPlusPlusV2;
 import org.fish.Gui.Tabs;
 import org.joml.Vector3f;
@@ -14,8 +15,11 @@ import org.joml.Vector3f;
 import static org.fish.FishPlusPlusV2.mc;
 
 public class Flight extends Feature {
+
+    DoubleSetting speedSetting = new DoubleSetting("Speed", 1.0, 0.1, 5.0);
     public Flight() {
-        super("Flight", Tabs.Visual);
+        super("Flight", Tabs.Movement);
+        this.AddSetting(speedSetting);
     }
 
     @EventHandler
@@ -33,7 +37,7 @@ public class Flight extends Feature {
         Vector3f offset = new Vector3f();
         Vector3f move = new Vector3f();
 
-        float speed = 1.0f;
+       float speed = speedSetting.getValue().floatValue();
 
         if (mc.player.input.keyPresses.forward())
             move.add(forwardX, 0.0f, forwardZ);

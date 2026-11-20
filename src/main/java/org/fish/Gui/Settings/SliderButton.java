@@ -40,7 +40,6 @@ public class SliderButton extends SettingButton<Double> {
 
         DoubleSetting doubleSetting = (DoubleSetting) this.setting;
         double newValue = newProgress * (doubleSetting.getMaxValue() - doubleSetting.getMinValue()) + doubleSetting.getMinValue();
-        FishPlusPlusV2.LOGGER.info("progress {}", newProgress);
         newValue = Mth.clamp(newValue, doubleSetting.getMinValue(), doubleSetting.getMaxValue());
         doubleSetting.setValue(newValue);
     }
