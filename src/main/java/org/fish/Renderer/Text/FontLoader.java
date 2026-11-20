@@ -8,6 +8,7 @@ import net.minecraft.client.gui.font.providers.FreeTypeUtil;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import org.fish.FishPlusPlusV2;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
@@ -60,7 +61,7 @@ public class FontLoader {
 
             FreeType.FT_New_Memory_Face(FreeTypeUtil.getLibrary(), fontData, 0, faceBuffer);
             face = FT_Face.create(faceBuffer.get());
-            FreeType.FT_Set_Pixel_Sizes(face, 0 , fontSize);
+            FreeType.FT_Set_Pixel_Sizes(face, 0, fontSize);
             stack.pop();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -100,7 +101,7 @@ public class FontLoader {
                     (int) (face.size().metrics().ascender() >> 6),
                     (float) x / w,
                     (float) g.bitmap().width() / w
-                    );
+            );
             characters.put(c, character);
 
             int size = Math.abs(g.bitmap().pitch()) * g.bitmap().rows();
@@ -123,5 +124,15 @@ public class FontLoader {
         if (activeFont == null)
             activeFont = font;
         fonts.put(fontName, font);
+    }
+
+    public static float GetLength(String text, float scale) {
+        float x = 0;
+        for (char c : text.toCharArray()) {
+            Character ch = activeFont.characters().get(c);
+
+            x += ch.Advance() * scale;
+        }
+        return x;
     }
 }
