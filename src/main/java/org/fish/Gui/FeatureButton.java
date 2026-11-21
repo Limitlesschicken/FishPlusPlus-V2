@@ -18,7 +18,7 @@ public class FeatureButton extends Region{
     @Getter
     private float bodyHeight = 0.0f;
 
-    private boolean openSettings = true;
+    private boolean openSettings = false;
 
     FeatureButton(float x, float y, String name, Feature feature) {
         super(x, y, 200, 30);
