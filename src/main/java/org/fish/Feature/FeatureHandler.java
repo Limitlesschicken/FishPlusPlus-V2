@@ -2,6 +2,7 @@ package org.fish.Feature;
 
 import org.fish.Feature.Features.ESP;
 import org.fish.Feature.Features.Flight;
+import org.fish.Feature.Features.Speed;
 import org.fish.Gui.Tabs;
 
 import java.util.ArrayList;
@@ -12,5 +13,6 @@ public class FeatureHandler {
 
         features.add(new ESP());
         features.add(new Flight());
+        features.add(new Speed());
     }
 }
