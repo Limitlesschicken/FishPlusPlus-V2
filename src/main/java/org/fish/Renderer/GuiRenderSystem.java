@@ -22,7 +22,7 @@ public class GuiRenderSystem {
     }
 
     private void RenderNode(GuiRenderSystem.Node node) {
-        Renderer.RenderMesh(node.mesh, new Renderer.RenderDescription(RenderPipelines.DefaultPipeline, false, null));
+        Renderer.RenderMesh(node.mesh, new Renderer.RenderDescription(RenderPipelines.UIPipeline, false, null));
         Renderer.RenderMesh(node.meshLine, new Renderer.RenderDescription(RenderPipelines.LinesPipeline, false, null));
         Renderer.RenderMesh(node.meshText, new Renderer.RenderDescription(RenderPipelines.TextPipeline, false, pass -> {
             if (FontLoader.getActiveFont() != null)

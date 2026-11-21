@@ -18,6 +18,7 @@ public class RenderPipelines {
 
     public static RenderPipeline DefaultPipeline;
     public static RenderPipeline LinesPipeline;
+    public static RenderPipeline UIPipeline;
     public static RenderPipeline TextPipeline;
 
     //add pipelines to an array for storage
@@ -62,6 +63,14 @@ public class RenderPipelines {
                         .withVertexShader(FishPlusPlusV2.id("default"))
                         .withFragmentShader(FishPlusPlusV2.id("default"))
                         .withPrimitiveTopology(PrimitiveTopology.DEBUG_LINES)
+                        .build()
+        );
+        UIPipeline = register(
+                RenderPipeline.builder(DefaultSnippet)
+                        .withLocation(FishPlusPlusV2.id("pipeline/ui"))
+                        .withVertexShader(FishPlusPlusV2.id("ui"))
+                        .withFragmentShader(FishPlusPlusV2.id("ui"))
+                        .withPrimitiveTopology(PrimitiveTopology.TRIANGLES)
                         .build()
         );
         TextPipeline = register(
